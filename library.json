@@ -1,0 +1,12 @@
+{
+  "id": "{22D8F62D-58EC-2D0F-5B64-C09075339B45}",
+  "author": "Joachim Päper",
+  "name": "IPS2Apple",
+  "url": "www.ip-symcon.de",
+  "compatibility": {
+        "version": "5.1"
+  },
+  "version": "1.0",
+  "build": 0,
+  "date": 0
+}
