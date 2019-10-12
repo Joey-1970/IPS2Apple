@@ -77,5 +77,22 @@
 		}
 	return $Result;
 	}
+	    
+	private function SendMessage()
+	{
+		set_include_path(__DIR__.'/../libs');
+		require_once (__DIR__ .'/../libs/FindMyiPhone.php');
+		
+		$FindMyiPhone = new FindMyiPhone('BENUTZERNAME', 'PASSWORT');  // iCloud Benutzer/Passwort eingeben
+
+		//$device_id = $FindMyiPhone->devices[1]->id;
+
+		$text = 'Ich bin eine Nachricht.';
+
+		echo 'Sende Nachricht... '."\n";
+		echo ($FindMyiPhone->send_message($device_id, $text, false, 'IP-Symcon')->statusCode == 200) ? '...gesendet!' : '...Fehler!';
+		echo PHP_EOL;
+
+	}
 }
 ?>
