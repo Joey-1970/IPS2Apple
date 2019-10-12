@@ -61,6 +61,21 @@
 	}
 	    
 	// Beginn der Funktionen
-	
+	private function FileTest()
+	{
+		// Schriftartpfad
+		$Result = false;
+		set_include_path(__DIR__.'/../libs');
+		$FileName = (__DIR__ .'/../libs/FindMyiPhone.php');
+		if (file_exists($FileName)) {
+			$this->SendDebug("FileTest", "Datei ".$FileName." gefunden!", 0);
+			$Result = true;
+		}
+		else {
+			$this->SendDebug("FileTest", "Datei ".$FileName." nicht gefunden!", 0);
+			$Result = false;
+		}
+	return $Result;
+	}
 }
 ?>
