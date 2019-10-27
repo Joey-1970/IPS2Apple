@@ -15,8 +15,8 @@
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
-		$this->RegisterPropertyString("iCloudUser", "xxx@icloud.com");
-		$this->RegisterPropertyString("iCloudPassword", "Passwort");
+		$this->RegisterPropertyString("iCloudUser", "iCloud-Benutzer");
+		$this->RegisterPropertyString("iCloudPassword", "iCloud-Passwort");
 		$this->RegisterTimer("State", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
         }
  	
@@ -77,10 +77,17 @@
 	// Beginn der Funktionen
 	public function GetData()
 	{
-	
+		set_include_path(__DIR__.'/../libs');
+		require_once (__DIR__ .'/../libs/FindMyiPhone.php');
+		
+		$iCloudUser = $this->ReadPropertyString("iCloudUser");;
+		$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
+		
+		$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
+		print_r($FindMyiPhone->devices);  // Devices mit allen Infos auflisten
 	}
 
-
+	/*
 	private function FileTest()
 	{
 		// Schriftartpfad
@@ -97,7 +104,7 @@
 		}
 	return $Result;
 	}
-	    
+	
 	private function SendMessage()
 	{
 		set_include_path(__DIR__.'/../libs');
@@ -110,5 +117,6 @@
 		echo ($FindMyiPhone->send_message($device_id, $text, false, 'IP-Symcon')->statusCode == 200) ? '...gesendet!' : '...Fehler!';
 		echo PHP_EOL;
 	}
+	*/
 }
 ?>
