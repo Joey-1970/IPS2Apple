@@ -1,0 +1,14 @@
+{
+  "id": "{715318DA-1FA4-3CB4-2F0C-383322125646}",
+  "name": "IPS2AppleSplitter",
+  "type": 2,
+  "vendor": "JP-IPS-Modules",
+  "aliases":
+  [
+    "IPS2AppleSplitter"
+  ],
+  "parentRequirements": [],
+  "childRequirements": ["{BEF67A8E-7EBF-7A20-588E-7B1F0CC4DD1A}"],
+  "implemented": ["{485663CC-3911-FAC7-9FCC-6E4D06438527}"],
+  "prefix": "IPS2AppleSplitter"
+}
