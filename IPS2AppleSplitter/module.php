@@ -2,13 +2,22 @@
     // Klassendefinition
     class IPS2AppleSplitter extends IPSModule 
     {
-	
+	public function Destroy() 
+	{
+		//Never delete this line!
+		parent::Destroy();
+		$this->SetTimerInterval("State", 0);
+	}
+	    
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
+		$this->RegisterPropertyString("iCloudUser", "xxx@icloud.com");
+		$this->RegisterPropertyString("iCloudPassword", "Passwort");
+		$this->RegisterTimer("State", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
         }
  	
 	public function GetConfigurationForm() 
@@ -21,6 +30,9 @@
 				
 		$arrayElements = array(); 
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
+		$arrayElements[] = array("type" => "Label", "label" => "iCloud-Zugriffsdaten");
+		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "iCloudUser", "caption" => "User");
+		$arrayElements[] = array("type" => "PasswordTextBox", "name" => "iCloudPassword", "caption" => "Password");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -30,14 +42,16 @@
         {
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
-		If (IPS_GetKernelRunlevel() == 10103) {	
 		
-			If ($this->ReadPropertyBoolean("Open") == true) {
-				$this->SetStatus(102);
-			}
-			else {
-				$this->SetStatus(104);
-			}
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SetStatus(102);
+			
+			$this->SetTimerInterval("State", 60 * 1000);
+		}
+		else {
+			$this->SetStatus(104);
+			$this->SetTimerInterval("State", 0);
+		}	
 		}
 	}
 	
@@ -61,6 +75,12 @@
 	}
 	    
 	// Beginn der Funktionen
+	public function GetData()
+	{
+	
+	}
+
+
 	private function FileTest()
 	{
 		// Schriftartpfad
