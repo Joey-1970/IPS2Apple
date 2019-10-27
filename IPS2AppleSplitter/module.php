@@ -52,7 +52,6 @@
 			$this->SetStatus(104);
 			$this->SetTimerInterval("State", 0);
 		}	
-		}
 	}
 	
 	public function ForwardData($JSONString) 
@@ -77,18 +76,20 @@
 	// Beginn der Funktionen
 	public function GetData()
 	{
-		set_include_path(__DIR__.'/../libs');
-		require_once (__DIR__ .'/../libs/FindMyiPhone.php');
-		
-		$iCloudUser = $this->ReadPropertyString("iCloudUser");;
-		$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
-		
-		$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
-		$AppleDevices = array();
-		
-		$AppleDevices = $FindMyiPhone->devices; 
-		
-		$this->SendDebug("GetData", serialize($AppleDevices), 0);
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			set_include_path(__DIR__.'/../libs');
+			require_once (__DIR__ .'/../libs/FindMyiPhone.php');
+
+			$iCloudUser = $this->ReadPropertyString("iCloudUser");;
+			$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
+
+			$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
+			$AppleDevices = array();
+
+			$AppleDevices = $FindMyiPhone->devices; 
+
+			$this->SendDebug("GetData", serialize($AppleDevices), 0);
+		}
 	}
 
 	/*
