@@ -84,7 +84,11 @@
 		$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
 		
 		$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
-		print_r($FindMyiPhone->devices);  // Devices mit allen Infos auflisten
+		$AppleDevices = array();
+		
+		$AppleDevices = $FindMyiPhone->devices; 
+		
+		$this->SendDebug("GetData", serialize($AppleDevices), 0);
 	}
 
 	/*
