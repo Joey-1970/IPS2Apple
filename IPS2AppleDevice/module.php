@@ -45,8 +45,8 @@
             	parent::ApplyChanges();
 		
 		//ReceiveData-Filter setzen
-		$Filter = '(.*"DeviceID":'.$this->ReadPropertyString("DeviceID").'.*|.*"InstanceID":'.$this->InstanceID.'.*)';
-		//$this->SetReceiveDataFilter($Filter);
+		$Filter = '(.*"DeviceID":'.$this->ReadPropertyString("DeviceID").'.*)';
+		$this->SetReceiveDataFilter($Filter);
 		
 		If ($this->HasActiveParent() == true) {
 			$this->SetStatus(102);	
