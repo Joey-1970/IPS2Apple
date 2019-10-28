@@ -28,7 +28,6 @@
 		$arrayStatus[] = array("code" => 202, "icon" => "error", "caption" => "Kommunikationfehler!");
 				
 		$arrayElements = array(); 
-		$arrayElements[] = array("type" => "Label", "label" => "Erferderliche Apple iCloud Daten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "DeviceID", "caption" => "Apple Device ID");
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
