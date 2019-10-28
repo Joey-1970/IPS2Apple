@@ -18,7 +18,7 @@
 		$this->RegisterPropertyString("iCloudUser", "iCloud-Benutzer");
 		$this->RegisterPropertyString("iCloudPassword", "iCloud-Passwort");
 		$this->RegisterPropertyInteger("DataUpdate", 5);
-		$this->RegisterTimer("State", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
+		$this->RegisterTimer("DataUpdate", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
         }
  	
 	public function GetConfigurationForm() 
@@ -48,11 +48,11 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SetStatus(102);
 			$this->GetData();
-			$this->SetTimerInterval("State", $this->ReadPropertyInteger("DataUpdate") * 60 * 1000);
+			$this->SetTimerInterval("DataUpdate", $this->ReadPropertyInteger("DataUpdate") * 60 * 1000);
 		}
 		else {
 			$this->SetStatus(104);
-			$this->SetTimerInterval("State", 0);
+			$this->SetTimerInterval("DataUpdate", 0);
 		}	
 	}
 	
