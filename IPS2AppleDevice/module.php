@@ -2,23 +2,15 @@
     // Klassendefinition
     class IPS2AppleDevice extends IPSModule 
     {
-	public function Destroy() 
-	{
-		//Never delete this line!
-		parent::Destroy();
-		$this->SetTimerInterval("Timer_1", 0);
-	}
-	    
+	
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->ConnectParent("{715318DA-1FA4-3CB4-2F0C-383322125646}");
-		$this->RegisterPropertyString("User", "Benutzername");
-		$this->RegisterPropertyString("Password", "Benutzerpasswort");
-		$this->RegisterPropertyInteger("Timer_1", 10);
-		$this->RegisterTimer("Timer_1", 0, 'I2AppleDevice_GetDataUpdate($_IPS["TARGET"]);');
+		$this->RegisterPropertyString("DeviceID", "Apple Device ID");
+		
 		
 		
 		// Profil anlegen
@@ -37,18 +29,14 @@
 				
 		$arrayElements = array(); 
 		$arrayElements[] = array("type" => "Label", "label" => "Erferderliche Apple iCloud Daten");
-		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "User", "caption" => "Benutzername");
-		$arrayElements[] = array("type" => "PasswordTextBox", "name" => "Password", "caption" => "Passwort");
-		$arrayElements[] = array("type" => "Label", "label" => "Aktualisierung");
-		$arrayElements[] = array("type" => "IntervalBox", "name" => "Timer_1", "caption" => "min");
+		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "DeviceID", "caption" => "Apple Device ID");
+		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Test Center"); 
 		$arrayElements[] = array("type" => "TestCenter", "name" => "TestCenter");
 
-		$arrayActions = array();
 		
-		
- 		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements, "actions" => $arrayActions)); 		 
+ 		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
 	   
         // Überschreibt die intere IPS_ApplyChanges($id) Funktion
@@ -57,27 +45,37 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
-		If (IPS_GetKernelRunlevel() == 10103) {	
-			If ($this->HasActiveParent() == true) {
-				$this->SetStatus(102);
-				$this->SetTimerInterval("Timer_1", $this->ReadPropertyInteger("Timer_1") * 1000 * 60);
-				// Passwort und Benutzernamen testen
-					$this->GetDataUpdate();
-				
-			}
-			else {
-				$this->SetStatus(104);
-			}
+		
+		If ($this->HasActiveParent() == true) {
+			$this->SetStatus(102);	
 		}
-	}
-	    
-	// Beginn der Funktionen
-	public function GetDataUpdate()
-	{
+		else {
+			$this->SetStatus(104);
+		}
 		
 	}
 	
-	
+	public function RequestAction($Ident, $Value) 
+	{
+  		switch($Ident) {
+			case "set_State":
+			    	If ($data->DeviceID == $this->ReadPropertyString("DeviceID")) {
+				   	$this->ShowData($data->DeviceDataArray);
+			   	}
+			    break;
+			
+	        default:
+	            throw new Exception("Invalid Ident");
+	    	}
+	}      
+	    
+	// Beginn der Funktionen
+	private function ShowData(string $DeviceData)
+	{
+		$DeviceDataArray = unserialize($DeviceData);
+		$this->SendDebug("ShowData", serialize($DeviceDataArray), 0);
+		$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
+	}
 	
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
 	{
