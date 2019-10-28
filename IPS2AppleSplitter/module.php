@@ -48,7 +48,7 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SetStatus(102);
 			$this->GetData();
-			$this->SetTimerInterval("State", ($this->ReadPropertyInteger("DataUpdate") * 60 * 1000);
+			$this->SetTimerInterval("State", $this->ReadPropertyInteger("DataUpdate") * 60 * 1000);
 		}
 		else {
 			$this->SetStatus(104);
