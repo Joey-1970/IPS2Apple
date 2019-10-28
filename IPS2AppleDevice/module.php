@@ -44,6 +44,9 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
+		//ReceiveData-Filter setzen
+		$Filter = '(.*"DeviceID":'.$this->ReadPropertyString("DeviceID")).'.*|.*"InstanceID":'.$this->InstanceID.'.*)';
+		$this->SetReceiveDataFilter($Filter);
 		
 		If ($this->HasActiveParent() == true) {
 			$this->SetStatus(102);	
