@@ -6,7 +6,7 @@
 	{
 		//Never delete this line!
 		parent::Destroy();
-		$this->SetTimerInterval("State", 0);
+		$this->SetTimerInterval("DataUpdate", 0);
 	}
 	    
 	// Überschreibt die interne IPS_Create($id) Funktion
