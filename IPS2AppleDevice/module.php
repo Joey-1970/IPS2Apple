@@ -63,7 +63,6 @@
 	{
 	 	// Empfangene Daten vom Gateway/Splitter
 	    	$data = json_decode($JSONString);
-		$this->SendDebug("RequestAction",$data , 0);
 	 	switch ($data->Function) {
 			case "set_State":
 			    	$this->SendDebug("RequestAction", "Ankommende ID:".$data->DeviceID, 0);
