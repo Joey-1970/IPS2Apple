@@ -2,13 +2,7 @@
     // Klassendefinition
     class IPS2AppleSplitter extends IPSModule 
     {
-	public function Destroy() 
-	{
-		//Never delete this line!
-		parent::Destroy();
-		$this->SetTimerInterval("DataUpdate", 0);
-	}
-	    
+	   
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
