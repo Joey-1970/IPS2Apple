@@ -68,6 +68,20 @@
 	            throw new Exception("Invalid Ident");
 	    	}
 	}      
+	 
+	public function ForwardData($JSONString) 
+	 {
+	 	// Empfangene Daten von der Device Instanz
+	    	$data = json_decode($JSONString);
+	 	switch ($data->Function) {
+			case "set_State":
+			    	$this->SendDebug("RequestAction", "Ankommende ID:".$data->DeviceID, 0);
+				If ($data->DeviceID == $this->ReadPropertyString("DeviceID")) {
+				   	$this->ShowData($data->DeviceDataArray);
+			   	}
+			    break;
+		}
+	}    
 	    
 	// Beginn der Funktionen
 	private function ShowData(string $DeviceData)
