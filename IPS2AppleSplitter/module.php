@@ -94,9 +94,9 @@
 			
 			foreach ($AppleDevices as $DeviceData) {
     				$DeviceID = $DeviceData->id;
-    				$DeviceDataArray = $DeviceData;
+				$this->SendDebug("GetData", $DeviceID, 0);
 				$this->SendDataToChildren(json_encode(Array("DataID" => "{BEF67A8E-7EBF-7A20-588E-7B1F0CC4DD1A}", 
-					"Function"=>"set_State", "DeviceID" => $DeviceID, "DeviceDataArray"=> serialize($DeviceDataArray))));
+					"Function"=>"set_State", "DeviceID" => $DeviceID, "DeviceDataArray"=> serialize($DeviceData))));
 
 			}
 		}
