@@ -91,6 +91,14 @@
 			$AppleDevices = $FindMyiPhone->devices; 
 
 			$this->SendDebug("GetData", serialize($AppleDevices), 0);
+			
+			foreach ($AppleDevices as $DeviceData) {
+    				$DeviceDataID = $DeviceData->id;
+    				$DeviceDataArray = $DeviceData;
+				$this->SendDataToChildren(json_encode(Array("DataID" => "{BEF67A8E-7EBF-7A20-588E-7B1F0CC4DD1A}", 
+					"Function"=>"set_State", "DeviceDataID" => $DeviceDataID, "DeviceDataArray"=> serialize($DeviceDataArray))));
+
+			}
 		}
 	}
 
