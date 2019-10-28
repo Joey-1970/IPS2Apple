@@ -17,6 +17,7 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyString("iCloudUser", "iCloud-Benutzer");
 		$this->RegisterPropertyString("iCloudPassword", "iCloud-Passwort");
+		$this->RegisterPropertyInteger("DataUpdate", 5);
 		$this->RegisterTimer("State", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
         }
  	
@@ -33,6 +34,7 @@
 		$arrayElements[] = array("type" => "Label", "label" => "iCloud-Zugriffsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "iCloudUser", "caption" => "User");
 		$arrayElements[] = array("type" => "PasswordTextBox", "name" => "iCloudPassword", "caption" => "Password");
+		$arrayElements[] = array("type" => "NumberSpinner", "name" => "DataUpdate", "caption" => "Daten-Update (min)");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -46,7 +48,7 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SetStatus(102);
 			$this->GetData();
-			$this->SetTimerInterval("State", 60 * 1000);
+			$this->SetTimerInterval("State", ($this->ReadPropertyInteger("DataUpdate") * 60 * 1000);
 		}
 		else {
 			$this->SetStatus(104);
