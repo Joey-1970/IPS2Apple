@@ -54,20 +54,7 @@
 		
 	}
 	
-	public function RequestAction($Ident, $Value) 
-	{
-  		switch($Ident) {
-			case "set_State":
-			    	$this->SendDebug("RequestAction", "Ankommende ID:".$data->DeviceID, 0);
-				If ($data->DeviceID == $this->ReadPropertyString("DeviceID")) {
-				   	$this->ShowData($data->DeviceDataArray);
-			   	}
-			    break;
-			
-	        default:
-	            throw new Exception("Invalid Ident");
-	    	}
-	}      
+	
 	 
 	public function ForwardData($JSONString) 
 	 {
