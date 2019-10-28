@@ -56,9 +56,9 @@
 	
 	
 	 
-	public function ForwardData($JSONString) 
-	 {
-	 	// Empfangene Daten von der Device Instanz
+	public function ReceiveData($JSONString) 
+	{
+	 	// Empfangene Daten vom Gateway/Splitter
 	    	$data = json_decode($JSONString);
 	 	switch ($data->Function) {
 			case "set_State":
