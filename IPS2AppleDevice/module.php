@@ -58,7 +58,8 @@
 	{
   		switch($Ident) {
 			case "set_State":
-			    	If ($data->DeviceID == $this->ReadPropertyString("DeviceID")) {
+			    	$this->SendDebug("RequestAction", "Ankommende ID:".$data->DeviceID, 0);
+				If ($data->DeviceID == $this->ReadPropertyString("DeviceID")) {
 				   	$this->ShowData($data->DeviceDataArray);
 			   	}
 			    break;
