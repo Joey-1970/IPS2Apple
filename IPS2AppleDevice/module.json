@@ -10,5 +10,5 @@
   "parentRequirements": ["{485663CC-3911-FAC7-9FCC-6E4D06438527}"],
   "childRequirements": [],
   "implemented": ["{BEF67A8E-7EBF-7A20-588E-7B1F0CC4DD1A}"],
-  "prefix": "I2AppleDevice"
+  "prefix": "IPS2AppleDevice"
 }
