@@ -15,8 +15,22 @@
 		
 		// Profil anlegen
 		
-		$this->RegisterVariableInteger("LastUpdate", "Letztes Update", "~UnixTimestamp", 20);
-			
+		// Statusvariablen anlegen
+		$this->RegisterVariableInteger("LastUpdate", "Letztes Update", "~UnixTimestamp", 10);
+		
+		$this->RegisterVariableBoolean("isOld", "ist alt", "", 20);
+		$this->RegisterVariableFloat("Longitude", "Longitude", "", 30);
+		$this->RegisterVariableFloat("Latitude", "Latitude", "", 40);
+		$this->RegisterVariableFloat("Altitude", "Altitude", "", 50);
+		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "", 60);
+		$this->RegisterVariableString("positionType", "Position Typ", "", 70);
+           	$this->RegisterVariableInteger("floorLevel", "Stockwerk", "", 80);
+            	$this->RegisterVariableFloat("horizontalAccuracy", "Horizontale Akkuratheit", "", 90);
+		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Akkuratheit", "", 100);
+           	$this->RegisterVariableInteger("timeStamp", "Zeitstempel", "~UnixTimestamp", 110);
+           	$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "", 120);
+            	$this->RegisterVariableString("locationType", "Lokation Typ", "", 130);
+            
         }
  	
 	public function GetConfigurationForm() 
