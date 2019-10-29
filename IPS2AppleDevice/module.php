@@ -92,8 +92,14 @@
 	private function ShowData(string $DeviceData)
 	{
 		$DeviceDataArray = unserialize($DeviceData);
+		If (property_exists($DeviceDataArray, "location->longitude")) {
+			SetValueFloat($this->GetIDForIdent("AirQualityGenauigkeit"), $DeviceDataArray->location->longitude));
+        	}  
+		If (property_exists($DeviceDataArray, "location->latitude")) {
+			SetValueFloat($this->GetIDForIdent("Latitude"), $DeviceDataArray->location->latitude));
+        	} 
 		$this->SendDebug("ShowData", serialize($DeviceDataArray), 0);
-		$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
+		//$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
 	}
 	
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
