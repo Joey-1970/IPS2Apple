@@ -92,10 +92,8 @@
 	private function ShowData(string $DeviceData)
 	{
 		$DeviceDataArray = unserialize($DeviceData);
-		If (property_exists($DeviceDataArray, "location->longitude")) {
+		If (isset($DeviceDataArray->location)) {
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
-        	}  
-		If (property_exists($DeviceDataArray, "location->latitude")) {
 			SetValueFloat($this->GetIDForIdent("Latitude"), $DeviceDataArray->location->latitude);
         	} 
 		$this->SendDebug("ShowData", serialize($DeviceDataArray), 0);
