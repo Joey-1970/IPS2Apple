@@ -14,14 +14,15 @@
 		
 		
 		// Profil anlegen
+		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information", "Nein", "Ja");
 		
 		// Statusvariablen anlegen
 		$this->RegisterVariableInteger("LastUpdate", "Letztes Update", "~UnixTimestamp", 10);
 		
 	
 		$LocationPostion = 20;
-		$this->RegisterVariableBoolean("isOld", "ist alt", "", $LocationPostion);
-		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "", $LocationPostion + 10);
+		$this->RegisterVariableBoolean("isOld", "ist alt", "JaNein.IPS2Apple", $LocationPostion);
+		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "JaNein.IPS2Apple", $LocationPostion + 10);
 		$this->RegisterVariableFloat("Altitude", "Altitude", "", $LocationPostion + 20);
 		$this->RegisterVariableString("positionType", "Position Typ", "", $LocationPostion + 30);
 		$this->RegisterVariableFloat("Latitude", "Latitude", "", $LocationPostion + 40);
@@ -29,7 +30,7 @@
 		$this->RegisterVariableFloat("horizontalAccuracy", "Horizontale Genauigkeit", "", $LocationPostion + 60);
 		$this->RegisterVariableString("locationType", "Lokation Typ", "", $LocationPostion + 70);
 		$this->RegisterVariableInteger("timeStamp", "Zeitstempel", "~UnixTimestamp", $LocationPostion + 80);
-		$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "", $LocationPostion + 90);
+		$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "JaNein.IPS2Apple", $LocationPostion + 90);
 		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "", $LocationPostion + 100);
 		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
 		
@@ -126,6 +127,23 @@
 		//$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
 	}
 	
+	private function RegisterProfileBoolean($Name, $Icon, $TextFalse, $TextTrue)
+	{
+	        if (!IPS_VariableProfileExists($Name))
+	        {
+	            IPS_CreateVariableProfile($Name, 0);
+	        }
+	        else
+	        {
+	            $profile = IPS_GetVariableProfile($Name);
+	            if ($profile['ProfileType'] != 0)
+	                throw new Exception("Variable profile type does not match for profile " . $Name);
+	        }
+	        IPS_SetVariableProfileIcon($Name, $Icon);
+	        IPS_SetVariableProfileAssociation($Name, 0, $TextFalse, "", -1);
+		IPS_SetVariableProfileAssociation($Name, 1, $TextTrue, "", -1);
+	}        
+	    
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
 	{
 	        if (!IPS_VariableProfileExists($Name))
