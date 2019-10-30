@@ -14,13 +14,18 @@
 		
 		
 		// Profil anlegen
-		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information", "Nein", "Ja");
+		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information");
+		IPS_SetVariableProfileAssociation("JaNein.IPS2Apple", 0, "Nein", "", -1);
+		IPS_SetVariableProfileAssociation("JaNein.IPS2Apple", 1, "Ja", "", -1);
 		
 		// Statusvariablen anlegen
 		$this->RegisterVariableInteger("LastUpdate", "Letztes Update", "~UnixTimestamp", 10);
 		
-	
-		$LocationPostion = 20;
+		$this->RegisterVariableString("modelDisplayName", "Model Name", "", 20);
+		
+		$this->RegisterVariableFloat("batteryLevel", "Batterie Level", "", 30);
+			
+		$LocationPostion = 100;
 		$this->RegisterVariableBoolean("isOld", "ist alt", "JaNein.IPS2Apple", $LocationPostion);
 		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "JaNein.IPS2Apple", $LocationPostion + 10);
 		$this->RegisterVariableFloat("Altitude", "Altitude", "", $LocationPostion + 20);
@@ -106,6 +111,8 @@
 	{
 		$DeviceDataArray = unserialize($DeviceData);
 		SetValueInteger($this->GetIDForIdent("LastUpdate"), time());
+		SetValueString($this->GetIDForIdent("modelDisplayName"), $DeviceDataArray->modelDisplayName);
+		SetValueFloat($this->GetIDForIdent("batteryLevel"), $DeviceDataArray->batteryLevel * 100);
 		
 		If (isset($DeviceDataArray->location)) {
 			SetValueBoolean($this->GetIDForIdent("isOld"), $DeviceDataArray->location->isOld);
@@ -127,7 +134,7 @@
 		//$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
 	}
 	
-	private function RegisterProfileBoolean($Name, $Icon, $TextFalse, $TextTrue)
+	private function RegisterProfileBoolean($Name, $Icon)
 	{
 	        if (!IPS_VariableProfileExists($Name))
 	        {
@@ -140,8 +147,6 @@
 	                throw new Exception("Variable profile type does not match for profile " . $Name);
 	        }
 	        IPS_SetVariableProfileIcon($Name, $Icon);
-	        IPS_SetVariableProfileAssociation($Name, 0, $TextFalse, "", -1);
-		IPS_SetVariableProfileAssociation($Name, 1, $TextTrue, "", -1);
 	}        
 	    
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
