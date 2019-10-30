@@ -92,7 +92,7 @@
 	    	$data = json_decode($JSONString);
 	 	switch ($data->Function) {
 			case "set_State":
-			    	$this->SendDebug("RequestAction", "Ankommende ID:".$data->DeviceID, 0);
+			    	//$this->SendDebug("RequestAction", "Ankommende ID:".$data->DeviceID, 0);
 				If ($data->DeviceID == $this->ReadPropertyString("DeviceID")) {
 				   	$this->ShowData($data->DeviceDataArray);
 			   	}
@@ -116,6 +116,7 @@
 			SetValueFloat($this->GetIDForIdent("horizontalAccuracy"), $DeviceDataArray->location->horizontalAccuracy);
 			SetValueString($this->GetIDForIdent("locationType"), $DeviceDataArray->location->locationType);
 			SetValueInteger($this->GetIDForIdent("timeStamp"), $DeviceDataArray->location->timeStamp);
+			$this->SendDebug("ShowData Timestamp", $DeviceDataArray->location->timeStamp, 0);
 			SetValueBoolean($this->GetIDForIdent("locationFinished"), $DeviceDataArray->location->locationFinished);
 			SetValueFloat($this->GetIDForIdent("verticalAccuracy"), $DeviceDataArray->location->verticalAccuracy);
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
