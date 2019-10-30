@@ -115,8 +115,8 @@
 			SetValueInteger($this->GetIDForIdent("floorLevel"), $DeviceDataArray->location->floorLevel);
 			SetValueFloat($this->GetIDForIdent("horizontalAccuracy"), $DeviceDataArray->location->horizontalAccuracy);
 			SetValueString($this->GetIDForIdent("locationType"), $DeviceDataArray->location->locationType);
-			SetValueInteger($this->GetIDForIdent("timeStamp"), $DeviceDataArray->location->timeStamp);
-			$this->SendDebug("ShowData Timestamp", $DeviceDataArray->location->timeStamp, 0);
+			SetValueInteger($this->GetIDForIdent("timeStamp"), intval($DeviceDataArray->location->timeStamp));
+			$this->SendDebug("ShowData Timestamp", intval($DeviceDataArray->location->timeStamp), 0);
 			SetValueBoolean($this->GetIDForIdent("locationFinished"), $DeviceDataArray->location->locationFinished);
 			SetValueFloat($this->GetIDForIdent("verticalAccuracy"), $DeviceDataArray->location->verticalAccuracy);
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
