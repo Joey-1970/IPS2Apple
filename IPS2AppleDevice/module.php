@@ -18,18 +18,30 @@
 		// Statusvariablen anlegen
 		$this->RegisterVariableInteger("LastUpdate", "Letztes Update", "~UnixTimestamp", 10);
 		
-		$this->RegisterVariableBoolean("isOld", "ist alt", "", 20);
-		$this->RegisterVariableFloat("Longitude", "Longitude", "", 30);
-		$this->RegisterVariableFloat("Latitude", "Latitude", "", 40);
-		$this->RegisterVariableFloat("Altitude", "Altitude", "", 50);
-		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "", 60);
-		$this->RegisterVariableString("positionType", "Position Typ", "", 70);
-           	$this->RegisterVariableInteger("floorLevel", "Stockwerk", "", 80);
-            	$this->RegisterVariableFloat("horizontalAccuracy", "Horizontale Akkuratheit", "", 90);
-		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Akkuratheit", "", 100);
-           	$this->RegisterVariableInteger("timeStamp", "Zeitstempel", "~UnixTimestamp", 110);
-           	$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "", 120);
-            	$this->RegisterVariableString("locationType", "Lokation Typ", "", 130);
+	
+		$LocationPostion = 20;
+		$this->RegisterVariableBoolean("isOld", "ist alt", "", $LocationPostion);
+		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "", $LocationPostion + 10);
+		$this->RegisterVariableFloat("Altitude", "Altitude", "", $LocationPostion + 20);
+		$this->RegisterVariableString("positionType", "Position Typ", "", $LocationPostion + 30);
+		$this->RegisterVariableFloat("Latitude", "Latitude", "", $LocationPostion + 40);
+		$this->RegisterVariableInteger("floorLevel", "Stockwerk", "", $LocationPostion + 50);
+		$this->RegisterVariableFloat("horizontalAccuracy", "Horizontale Genauigkeit", "", $LocationPostion + 60);
+		$this->RegisterVariableString("locationType", "Lokation Typ", "", $LocationPostion + 70);
+		$this->RegisterVariableInteger("timeStamp", "Zeitstempel", "~UnixTimestamp", $LocationPostion + 80);
+		$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "", $LocationPostion + 90);
+		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "", $LocationPostion + 100);
+		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
+		
+		
+		
+		
+           	
+            	
+		
+           	
+           	
+            	
             
         }
  	
@@ -92,9 +104,22 @@
 	private function ShowData(string $DeviceData)
 	{
 		$DeviceDataArray = unserialize($DeviceData);
+		SetValueInteger($this->GetIDForIdent("LastUpdate"), time());
+		
 		If (isset($DeviceDataArray->location)) {
-			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
+			SetValueBoolean($this->GetIDForIdent("isOld"), $DeviceDataArray->location->isOld);
+			SetValueBoolean($this->GetIDForIdent("isInaccurate"), $DeviceDataArray->location->isInaccurate);
+			SetValueFloat($this->GetIDForIdent("Altitude"), $DeviceDataArray->location->Altitude);
+			SetValueString($this->GetIDForIdent("positionType"), $DeviceDataArray->location->positionType);
 			SetValueFloat($this->GetIDForIdent("Latitude"), $DeviceDataArray->location->latitude);
+			SetValueInteger($this->GetIDForIdent("floorLevel"), $DeviceDataArray->location->floorLevel);
+			SetValueFloat($this->GetIDForIdent("horizontalAccuracy"), $DeviceDataArray->location->horizontalAccuracy);
+			SetValueString($this->GetIDForIdent("locationType"), $DeviceDataArray->location->locationType);
+			SetValueInteger($this->GetIDForIdent("timeStamp"), $DeviceDataArray->location->timeStamp);
+			SetValueBoolean($this->GetIDForIdent("locationFinished"), $DeviceDataArray->location->locationFinished);
+			SetValueFloat($this->GetIDForIdent("verticalAccuracy"), $DeviceDataArray->location->verticalAccuracy);
+			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
+			
         	} 
 		$this->SendDebug("ShowData", serialize($DeviceDataArray), 0);
 		//$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
