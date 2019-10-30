@@ -110,7 +110,7 @@
 		If (isset($DeviceDataArray->location)) {
 			SetValueBoolean($this->GetIDForIdent("isOld"), $DeviceDataArray->location->isOld);
 			SetValueBoolean($this->GetIDForIdent("isInaccurate"), $DeviceDataArray->location->isInaccurate);
-			SetValueFloat($this->GetIDForIdent("Altitude"), $DeviceDataArray->location->Altitude);
+			SetValueFloat($this->GetIDForIdent("Altitude"), $DeviceDataArray->location->altitude);
 			SetValueString($this->GetIDForIdent("positionType"), $DeviceDataArray->location->positionType);
 			SetValueFloat($this->GetIDForIdent("Latitude"), $DeviceDataArray->location->latitude);
 			SetValueInteger($this->GetIDForIdent("floorLevel"), $DeviceDataArray->location->floorLevel);
