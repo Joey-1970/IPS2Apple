@@ -1,0 +1,14 @@
+{
+  "id": "{CB1611BC-4A20-5F59-CA90-BC06CD4EDE8F}",
+  "name": "IPS2AppleConfigurator",
+  "type": 4,
+  "vendor": "JP-IPS-Modules",
+  "aliases":
+  [
+    "IPS2AppleConfigurator"
+  ],
+  "parentRequirements": ["{485663CC-3911-FAC7-9FCC-6E4D06438527}"],
+  "childRequirements": [],
+  "implemented": ["{BEF67A8E-7EBF-7A20-588E-7B1F0CC4DD1A}"],
+  "prefix": "IPS2AppleConfigurator"
+}
