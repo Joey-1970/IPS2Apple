@@ -42,7 +42,7 @@
 		$this->RegisterVariableInteger("floorLevel", "Stockwerk", "", $LocationPostion + 50);
 		$this->RegisterVariableFloat("horizontalAccuracy", "Horizontale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 60);
 		$this->RegisterVariableString("locationType", "Lokation Typ", "", $LocationPostion + 70);
-		$this->RegisterVariableInteger("timeStamp", "Zeitstempel", "~UnixTimestamp", $LocationPostion + 80);
+		$this->RegisterVariableInteger("timeStamp", "Zeitstempel der Lokalisierung", "~UnixTimestamp", $LocationPostion + 80);
 		$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "JaNein.IPS2Apple", $LocationPostion + 90);
 		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 100);
 		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
