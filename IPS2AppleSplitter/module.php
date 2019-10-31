@@ -112,6 +112,7 @@
     				$DeviceArray[$i]["DeviceID"] = $DeviceData->id;
 				$DeviceArray[$i]["DeviceModel"] = $DeviceData->modelDisplayName;
 				$DeviceArray[$i]["DeviceName"] = $DeviceData->name;
+				$DeviceArray[$i]["InstanceID"] = 0;
 				$i = $i + 1;
 			}
 		}
