@@ -88,7 +88,7 @@
 			$this->SendDebug("GetData", "Fehler bei der Datenermittlung!", 0);
 		}
 		
-	return $DevicenArray;
+	return serialize($ResultArray);
 	}
 	
 	function GetDeviceInstanceID(string $DeviceID)
