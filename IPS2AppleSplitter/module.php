@@ -56,15 +56,10 @@
 	    	$data = json_decode($JSONString);
 	    	$Result = -999;
 	 	switch ($data->Function) {
-			case "GetAreaInformation":
-				
+			case "getData":
+				$this->GetData();
 				break;
-			case "GetDetailInformation":
-				
-				break;
-			case "DataCorrection":
-				
-				break;
+			
 		}
 	return $Result;
 	}
