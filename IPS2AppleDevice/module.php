@@ -136,7 +136,6 @@
 			SetValueFloat($this->GetIDForIdent("horizontalAccuracy"), $DeviceDataArray->location->horizontalAccuracy);
 			SetValueString($this->GetIDForIdent("locationType"), $DeviceDataArray->location->locationType);
 			SetValueInteger($this->GetIDForIdent("timeStamp"), intval($DeviceDataArray->location->timeStamp / 1000));
-			$this->SendDebug("ShowData Timestamp", intval($DeviceDataArray->location->timeStamp / 1000), 0);
 			SetValueBoolean($this->GetIDForIdent("locationFinished"), $DeviceDataArray->location->locationFinished);
 			SetValueFloat($this->GetIDForIdent("verticalAccuracy"), $DeviceDataArray->location->verticalAccuracy);
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
