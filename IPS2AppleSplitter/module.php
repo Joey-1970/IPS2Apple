@@ -54,10 +54,13 @@
 	 {
 	 	// Empfangene Daten von der Device Instanz
 	    	$data = json_decode($JSONString);
-	    	$Result = -999;
+	    	$Result = false;
 	 	switch ($data->Function) {
 			case "getData":
 				$this->GetData();
+				break;
+			case "getConfiguratorData":
+				$Result = $this->GetConfiguratorData();
 				break;
 			
 		}
@@ -90,7 +93,31 @@
 			}
 		}
 	}
-
+	
+	public function GetConfiguratorData()
+	{
+		$DeviceArray = array();
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			set_include_path(__DIR__.'/../libs');
+			require_once (__DIR__ .'/../libs/FindMyiPhone.php');
+			$iCloudUser = $this->ReadPropertyString("iCloudUser");;
+			$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
+			$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
+			$AppleDevices = array();
+			$AppleDevices = $FindMyiPhone->devices; 
+			$this->SendDebug("GetConfiguratorData", serialize($AppleDevices), 0);
+			
+			$i = 0;
+			foreach ($AppleDevices as $DeviceData) {
+    				$DeviceArray[$i]["DeviceID"] = $DeviceData->id;
+				$DeviceArray[$i]["DeviceModell"] = $DeviceData->modelDisplayName;
+				$DeviceArray[$i]["DeviceName"] = $DeviceData->name;
+				$i = $i + 1;
+			}
+		}
+	return serialize($DeviceArray);
+	}    
+	    
 	/*
 	private function FileTest()
 	{
