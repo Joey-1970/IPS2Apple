@@ -67,19 +67,15 @@
 	// Beginn der Funktionen
 	private function GetData()
 	{
-		$locationObject = json_decode($this->ReadPropertyString('Location'), true);
-		$Lat = $locationObject['latitude'];
-		$Long = $locationObject['longitude']; 
-		$Radius = $this->ReadPropertyFloat("Radius");
-		$Radius = min(25, max(0, $Radius));
-		$StationArray = array();
-		If (($Lat <> 0) AND ($Long <> 0) AND ($Radius > 0)) {
-			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{6ADD0473-D761-A2BF-63BE-CFE279089F5A}", 
-				"Function" => "GetAreaInformation", "InstanceID" => $this->InstanceID, "Lat" => $Lat, "Long" => $Long, "Radius" => $Radius )));
+		
+		$DeviceArray = array();
+		
+			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
+					 "Function" => "getConfiguratorData")));
 			If ($Result <> false) {
 				$this->SetStatus(102);
 				$this->SendDebug("GetData", $Result, 0);
-				//$this->ShowResult($Result);
+				
 				$ResultArray = array();
 				$ResultArray = json_decode($Result);
 				// Fehlerbehandlung
@@ -90,39 +86,34 @@
 				
 				$i = 0;
 				foreach($ResultArray->stations as $Stations) {
-					$StationArray[$i]["Brand"] = ucwords(strtolower($Stations->brand));
-					$StationArray[$i]["Name"] = ucwords(strtolower($Stations->name));
-					$StationArray[$i]["Street"] = ucwords(strtolower($Stations->street));
-					$StationArray[$i]["Place"] = ucwords(strtolower($Stations->place));
-					$StationArray[$i]["StationsID"] = $Stations->id;
-					$StationArray[$i]["InstanceID"] = $this->GetStationInstanceID($Stations->id);
+					$DeviceArray[$i]["Device"] = ucwords(strtolower($Stations->brand));
+					$DeviceArray[$i]["Name"] = ucwords(strtolower($Stations->name));
+					$StationArray[$i]["DeviceID"] = $Stations->id;
+					$StationArray[$i]["InstanceID"] = $this->GetDeviceInstanceID($Stations->id);
 					$i = $i + 1;
 				}
-				$this->SendDebug("GetData", "TankstellenArray: ".serialize($StationArray), 0);
+				$this->SendDebug("GetData", "DeviceArray: ".serialize($DeviceArray), 0);
 				
 			}
 			else {
 				$this->SetStatus(202);
 				$this->SendDebug("GetData", "Fehler bei der Datenermittlung!", 0);
 			}
-		}
-		else {
-			$this->SendDebug("GetDataUpdate", "Keine Koordinaten verfügbar!", 0);
-		}
-	return serialize($StationArray);
+		
+	return serialize($DevicenArray);
 	}
 	
-	function GetStationInstanceID(string $StationID)
+	function GetDeviceInstanceID(string $DeviceID)
 	{
-		$guid = "{47286CAD-187A-6D88-89F0-BDA50CBF712F}";
+		$guid = "{4C40D461-8047-04BC-3566-52E76067225A}";
 	    	$Result = 0;
 	    	// Modulinstanzen suchen
 	    	$InstanceArray = array();
 	    	$InstanceArray = @(IPS_GetInstanceListByModuleID($guid));
 	    	If (is_array($InstanceArray)) {
 			foreach($InstanceArray as $Module) {
-				If (strtolower(IPS_GetProperty($Module, "StationID")) == strtolower($StationID)) {
-					$this->SendDebug("GetStationInstanceID", "Gefundene Instanz: ".$Module, 0);
+				If (strtolower(IPS_GetProperty($Module, "DeviceID")) == strtolower($DeviceID)) {
+					$this->SendDebug("GetDeviceInstanceID", "Gefundene Instanz: ".$Module, 0);
 					$Result = $Module;
 					break;
 				}
