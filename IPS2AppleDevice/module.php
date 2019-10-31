@@ -18,12 +18,16 @@
 		IPS_SetVariableProfileAssociation("JaNein.IPS2Apple", 0, "Nein", "", -1);
 		IPS_SetVariableProfileAssociation("JaNein.IPS2Apple", 1, "Ja", "", -1);
 		
+		$this->RegisterProfileFloat("Meter.IPS2Apple", "Distance", "", " m", 0, 1000, 0.1, 1);
+		
+		$this->RegisterProfileFloat("Percent.IPS2Apple", "Graph", "", " %", 0, 100, 0.1, 1);
+		
 		// Statusvariablen anlegen
 		$this->RegisterVariableInteger("LastUpdate", "Letztes Update", "~UnixTimestamp", 10);
 		
 		$this->RegisterVariableString("modelDisplayName", "Model Name", "", 20);
 		
-		$this->RegisterVariableFloat("batteryLevel", "Batterie Level", "", 30);
+		$this->RegisterVariableFloat("batteryLevel", "Batterie Level", "Percent.IPS2Apple", 30);
 		$this->RegisterVariableString("batteryStatus", "Batterie Status", "", 40);
 		$this->RegisterVariableString("name", "Device Name", "", 50);
 		$this->RegisterVariableString("deviceClass", "Device Klasse", "", 60);
@@ -32,15 +36,15 @@
 		$LocationPostion = 100;
 		$this->RegisterVariableBoolean("isOld", "ist alt", "JaNein.IPS2Apple", $LocationPostion);
 		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "JaNein.IPS2Apple", $LocationPostion + 10);
-		$this->RegisterVariableFloat("Altitude", "Altitude", "", $LocationPostion + 20);
+		$this->RegisterVariableFloat("Altitude", "Altitude", "Meter.IPS2Apple", $LocationPostion + 20);
 		$this->RegisterVariableString("positionType", "Position Typ", "", $LocationPostion + 30);
 		$this->RegisterVariableFloat("Latitude", "Latitude", "", $LocationPostion + 40);
 		$this->RegisterVariableInteger("floorLevel", "Stockwerk", "", $LocationPostion + 50);
-		$this->RegisterVariableFloat("horizontalAccuracy", "Horizontale Genauigkeit", "", $LocationPostion + 60);
+		$this->RegisterVariableFloat("horizontalAccuracy", "Horizontale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 60);
 		$this->RegisterVariableString("locationType", "Lokation Typ", "", $LocationPostion + 70);
 		$this->RegisterVariableInteger("timeStamp", "Zeitstempel", "~UnixTimestamp", $LocationPostion + 80);
 		$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "JaNein.IPS2Apple", $LocationPostion + 90);
-		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "", $LocationPostion + 100);
+		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 100);
 		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
 		
 		
