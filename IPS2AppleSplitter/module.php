@@ -110,7 +110,7 @@
 			$i = 0;
 			foreach ($AppleDevices as $DeviceData) {
     				$DeviceArray[$i]["DeviceID"] = $DeviceData->id;
-				$DeviceArray[$i]["DeviceModell"] = $DeviceData->modelDisplayName;
+				$DeviceArray[$i]["DeviceModel"] = $DeviceData->modelDisplayName;
 				$DeviceArray[$i]["DeviceName"] = $DeviceData->name;
 				$i = $i + 1;
 			}
