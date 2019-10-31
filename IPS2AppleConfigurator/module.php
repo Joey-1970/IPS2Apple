@@ -29,9 +29,9 @@
 		$arrayColumns[] = array("caption" => "Modell", "name" => "Device", "width" => "100px", "visible" => true);
 		$arrayColumns[] = array("caption" => "Name", "name" => "Name", "width" => "auto", "visible" => true);
 		
-		$StationArray = array();
+		$DeviceArray = array();
 		If ($this->HasActiveParent() == true) {
-			$DevicenArray = unserialize($this->GetData());
+			$DeviceArray = unserialize($this->GetData());
 		}
 		$arrayValues = array();
 		for ($i = 0; $i < Count($StationArray); $i++) {
