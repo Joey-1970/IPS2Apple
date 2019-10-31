@@ -38,7 +38,7 @@
 			$arrayCreate = array();
 			$arrayCreate[] = array("moduleID" => "{4C40D461-8047-04BC-3566-52E76067225A}", 
 					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"]));
-			$arrayValues[] = array("Brand" => $DeviceArray[$i]["Device"], "Name" => $DeviceArray[$i]["Name"], 
+			$arrayValues[] = array("Device" => $DeviceArray[$i]["DeviceModel"], "Name" => $DeviceArray[$i]["DeviceName"], 
 					       "instanceID" => $DeviceArray[$i]["InstanceID"], 
 					       "create" => $arrayCreate);
 		}
@@ -70,37 +70,25 @@
 		
 		$DeviceArray = array();
 		
-			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
-					 "Function" => "getConfiguratorData")));
-			If ($Result <> false) {
-				$this->SetStatus(102);
-				$this->SendDebug("GetData", $Result, 0);
-				
-				$ResultArray = array();
-				$ResultArray = json_decode($Result);
-				// Fehlerbehandlung
-				If (boolval($ResultArray->ok) == false) {
-					$this->SendDebug("ShowResult", "Fehler bei der Datenermittlung: ".utf8_encode($ResultArray->message), 0);
-					return;
-				}
-				
-				$i = 0;
-				foreach($ResultArray->stations as $Stations) {
-					$DeviceArray[$i]["Device"] = ucwords(strtolower($Stations->brand));
-					$DeviceArray[$i]["Name"] = ucwords(strtolower($Stations->name));
-					$StationArray[$i]["DeviceID"] = $Stations->id;
-					$StationArray[$i]["InstanceID"] = $this->GetDeviceInstanceID($Stations->id);
-					$i = $i + 1;
-				}
-				$this->SendDebug("GetData", "DeviceArray: ".serialize($DeviceArray), 0);
-				
+		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
+				 "Function" => "getConfiguratorData")));
+		If ($Result <> false) {
+			$this->SetStatus(102);
+			$this->SendDebug("GetData", $Result, 0);
+
+			$ResultArray = array();
+			$ResultArray = unserialize($Result);
+			$i = 0;
+			for ($i = 0; $i <= count($ResultArray); $i++) {
+				$ResultArray[$i]["InstanceID"] = $this->GetDeviceInstanceID($ResultArray[$i]["DeviceID"]);
 			}
-			else {
-				$this->SetStatus(202);
-				$this->SendDebug("GetData", "Fehler bei der Datenermittlung!", 0);
-			}
+		}
+		else {
+			$this->SetStatus(202);
+			$this->SendDebug("GetData", "Fehler bei der Datenermittlung!", 0);
+		}
 		
-	return serialize($DevicenArray);
+	return $DevicenArray;
 	}
 	
 	function GetDeviceInstanceID(string $DeviceID)
