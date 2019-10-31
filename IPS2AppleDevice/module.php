@@ -24,6 +24,10 @@
 		$this->RegisterVariableString("modelDisplayName", "Model Name", "", 20);
 		
 		$this->RegisterVariableFloat("batteryLevel", "Batterie Level", "", 30);
+		$this->RegisterVariableString("batteryStatus", "Batterie Status", "", 40);
+		$this->RegisterVariableString("name", "Device Name", "", 50);
+		$this->RegisterVariableString("deviceClass", "Device Klasse", "", 60);
+		
 			
 		$LocationPostion = 100;
 		$this->RegisterVariableBoolean("isOld", "ist alt", "JaNein.IPS2Apple", $LocationPostion);
@@ -113,6 +117,10 @@
 		SetValueInteger($this->GetIDForIdent("LastUpdate"), time());
 		SetValueString($this->GetIDForIdent("modelDisplayName"), $DeviceDataArray->modelDisplayName);
 		SetValueFloat($this->GetIDForIdent("batteryLevel"), $DeviceDataArray->batteryLevel * 100);
+		SetValueString($this->GetIDForIdent("batteryStatus"), $DeviceDataArray->batteryStatus);
+		SetValueString($this->GetIDForIdent("name"), $DeviceDataArray->name);
+		SetValueString($this->GetIDForIdent("deviceClass"), $DeviceDataArray->deviceClass);
+		
 		
 		If (isset($DeviceDataArray->location)) {
 			SetValueBoolean($this->GetIDForIdent("isOld"), $DeviceDataArray->location->isOld);
