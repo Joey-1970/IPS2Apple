@@ -34,7 +34,7 @@
 			$DeviceArray = unserialize($this->GetData());
 		}
 		$arrayValues = array();
-		for ($i = 0; $i < Count($StationArray); $i++) {
+		for ($i = 0; $i < Count($DeviceArray); $i++) {
 			$arrayCreate = array();
 			$arrayCreate[] = array("moduleID" => "{4C40D461-8047-04BC-3566-52E76067225A}", 
 					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"]));
