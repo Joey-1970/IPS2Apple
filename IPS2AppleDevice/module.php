@@ -11,8 +11,6 @@
 		$this->ConnectParent("{715318DA-1FA4-3CB4-2F0C-383322125646}");
 		$this->RegisterPropertyString("DeviceID", "Apple Device ID");
 		
-		
-		
 		// Profil anlegen
 		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information");
 		IPS_SetVariableProfileAssociation("JaNein.IPS2Apple", 0, "Nein", "", -1);
@@ -32,7 +30,6 @@
 		$this->RegisterVariableString("name", "Device Name", "", 50);
 		$this->RegisterVariableString("deviceClass", "Device Klasse", "", 60);
 		
-			
 		$LocationPostion = 100;
 		$this->RegisterVariableBoolean("isOld", "ist alt", "JaNein.IPS2Apple", $LocationPostion);
 		$this->RegisterVariableBoolean("isInaccurate", "ist Inakkurat", "JaNein.IPS2Apple", $LocationPostion + 10);
@@ -46,17 +43,7 @@
 		$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "JaNein.IPS2Apple", $LocationPostion + 90);
 		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 100);
 		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
-		
-		
-		
-		
-           	
-            	
-		
-           	
-           	
-            	
-            
+        
         }
  	
 	public function GetConfigurationForm() 
@@ -93,7 +80,6 @@
 			$this->SetStatus(102);	
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
 					 "Function" => "getData")));
-
 		}
 		else {
 			$this->SetStatus(104);
@@ -101,8 +87,6 @@
 		
 	}
 	
-	
-	 
 	public function ReceiveData($JSONString) 
 	{
 	 	// Empfangene Daten vom Gateway/Splitter
