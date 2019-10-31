@@ -79,7 +79,7 @@
 			$ResultArray = array();
 			$ResultArray = unserialize($Result);
 			$i = 0;
-			for ($i = 0; $i <= count($ResultArray); $i++) {
+			for ($i = 0; $i < count($ResultArray); $i++) {
 				$ResultArray[$i]["InstanceID"] = $this->GetDeviceInstanceID($ResultArray[$i]["DeviceID"]);
 			}
 		}
