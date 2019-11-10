@@ -71,6 +71,8 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
+		$this->RegisterMessage($this->InstanceID, 10103);
+		
 		//ReceiveData-Filter setzen
 		$DeviceID = $this->ReadPropertyString("DeviceID");
 		$Filter = '(.*"DeviceID":'.$DeviceID.'.*)';
@@ -87,6 +89,16 @@
 		
 	}
 	
+	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    	{
+ 		switch ($Message) {
+			case 10103:
+				$this->ApplyChanges();
+				break;
+			
+		}
+    	}    
+	    
 	public function ReceiveData($JSONString) 
 	{
 	 	// Empfangene Daten vom Gateway/Splitter
