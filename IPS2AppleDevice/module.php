@@ -120,8 +120,10 @@
 		$this->SetStatus(102);
 		SetValueInteger($this->GetIDForIdent("LastUpdate"), time());
 		SetValueString($this->GetIDForIdent("modelDisplayName"), $DeviceDataArray->modelDisplayName);
-		SetValueFloat($this->GetIDForIdent("batteryLevel"), $DeviceDataArray->batteryLevel * 100);
 		SetValueString($this->GetIDForIdent("batteryStatus"), $DeviceDataArray->batteryStatus);
+		If ($DeviceDataArray->batteryStatus <> "Unknown") {
+			SetValueFloat($this->GetIDForIdent("batteryLevel"), $DeviceDataArray->batteryLevel * 100);
+		}
 		SetValueString($this->GetIDForIdent("name"), $DeviceDataArray->name);
 		SetValueString($this->GetIDForIdent("deviceClass"), $DeviceDataArray->deviceClass);
 		
