@@ -142,7 +142,7 @@
 			SetValueBoolean($this->GetIDForIdent("locationFinished"), $DeviceDataArray->location->locationFinished);
 			SetValueFloat($this->GetIDForIdent("verticalAccuracy"), $DeviceDataArray->location->verticalAccuracy);
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
-			$this->GoogleMaps($DeviceDataArray->location->latitude, $DeviceDataArray->location->longitude);
+			$this->GoogleMaps($DeviceDataArray->location->latitude, $DeviceDataArray->location->longitude, $DeviceDataArray->name);
         	} 
 		else {
 			SetValueString($this->GetIDForIdent("GoogleMaps"), "Karte konnte nicht erstellt werden (Keine aktuellen Daten).");
@@ -151,7 +151,7 @@
 		//$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
 	}
 	
-	private function GoogleMaps(float $Latitude, float $Longitude)
+	private function GoogleMaps(float $Latitude, float $Longitude, string $DeviceName)
 	{
 		$GoogleMapsInstanceID = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
 						"Function" => "getGoogleMapsInstanceID")));
@@ -183,7 +183,7 @@
 
 			$markers[] = [
 			    'color'     => 'green',
-			    'label'		   => 'P',
+			    'label'	=> $DeviceName,
 			    'points'    => $marker_points,
 			];
 
