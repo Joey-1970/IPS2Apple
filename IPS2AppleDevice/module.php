@@ -11,6 +11,8 @@
 		$this->ConnectParent("{715318DA-1FA4-3CB4-2F0C-383322125646}");
 		$this->RegisterPropertyString("DeviceID", "Apple Device ID");
 		$this->RegisterPropertyString("MapType", "roadmap");
+		$this->RegisterPropertyInteger("MapWidth", 1000);
+		$this->RegisterPropertyInteger("MapHeight", 1000);
 		
 		// Profil anlegen
 		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information");
