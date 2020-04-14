@@ -183,7 +183,7 @@
 
 			$markers[] = [
 			    'color'     => 'green',
-			    'label'	=> $DeviceName,
+			    'label'	=> strtoupper(substr($DeviceName, 0, 1)),
 			    'points'    => $marker_points,
 			];
 
