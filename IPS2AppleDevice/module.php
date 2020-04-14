@@ -144,6 +144,9 @@
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
 			$this->GoogleMaps($DeviceDataArray->location->latitude, $DeviceDataArray->location->longitude);
         	} 
+		else {
+			SetValueString($this->GetIDForIdent("GoogleMaps"), "Karte konnte nicht erstellt werden (Keine aktuellen Daten).");
+		}
 		$this->SendDebug("ShowData", serialize($DeviceDataArray), 0);
 		//$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
 	}
