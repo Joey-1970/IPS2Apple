@@ -43,6 +43,7 @@
 		$this->RegisterVariableBoolean("locationFinished", "Messung abgeschlossen", "JaNein.IPS2Apple", $LocationPostion + 90);
 		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 100);
 		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
+		$this->RegisterVariableString("GoogleMaps", "GoogleMaps", "~HTMLBox", $LocationPostion + 120);
         
         }
  	
@@ -141,12 +142,64 @@
 			SetValueBoolean($this->GetIDForIdent("locationFinished"), $DeviceDataArray->location->locationFinished);
 			SetValueFloat($this->GetIDForIdent("verticalAccuracy"), $DeviceDataArray->location->verticalAccuracy);
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
-			
+			$this->GoogleMaps($DeviceDataArray->location->latitude, $DeviceDataArray->location->longitude);
         	} 
 		$this->SendDebug("ShowData", serialize($DeviceDataArray), 0);
 		//$this->SendDebug("ShowData", $DeviceDataArray->location->longitude, 0);
 	}
 	
+	private function GoogleMaps(float $Latitude, float $Longitude)
+	{
+		$GoogleMapsInstanceID = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
+						"Function" => "getGoogleMapsInstanceID")));
+		
+		$points = [
+    			['lat' => $Latitude, 'lng' => $Longitude]
+			];
+		
+		// allgemeine Angaben zur Karte
+		$map = [];
+
+		// Mittelpunkt der Karte
+		$map['center'] = $points[0];
+
+		$map['zoom'] = 18;
+		$map['size'] = '1000x1000';
+		$map['scale'] = 2;
+		$map['maptype'] = 'roadmap';
+
+		$styles = [];
+
+		$map['styles'] = $styles;
+
+		$markers = [];
+
+		$marker_points = [];
+		$marker_points[0] = $points[0];
+
+		$markers[] = [
+		    'color'     => 'green',
+		    'label'		   => 'P',
+		    'points'    => $marker_points,
+		];
+
+		$marker_points = [];
+		
+
+		$markers[] = [
+		    'color'     => '0x0000ff',
+		    'size'      => 'tiny',
+		    'points'    => $marker_points,
+		];
+
+		$map['markers'] = $markers;
+		
+		$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
+
+		$html = '<img width="1000", height="1000" src="' . $url . '" />';
+		SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
+	}
+	    
 	private function RegisterProfileBoolean($Name, $Icon)
 	{
 	        if (!IPS_VariableProfileExists($Name))
