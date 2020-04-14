@@ -11,8 +11,8 @@
 		$this->ConnectParent("{715318DA-1FA4-3CB4-2F0C-383322125646}");
 		$this->RegisterPropertyString("DeviceID", "Apple Device ID");
 		$this->RegisterPropertyString("MapType", "roadmap");
-		$this->RegisterPropertyInteger("MapWidth", 1000);
-		$this->RegisterPropertyInteger("MapHeight", 1000);
+		$this->RegisterPropertyInteger("MapWidth", 640);
+		$this->RegisterPropertyInteger("MapHeight", 640);
 		
 		// Profil anlegen
 		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information");
@@ -67,6 +67,7 @@
 		$arrayOptions[] = array("label" => "Hybrid", "value" => "hybrid");
 		$arrayOptions[] = array("label" => "Terrain", "value" => "terrain");
 		$arrayElements[] = array("type" => "Select", "name" => "MapType", "caption" => "Kartentyp", "options" => $arrayOptions );
+		$arrayElements[] = array("type" => "Label", "label" => "Der Maximalwert ist 640px"); 
 		$arrayElements[] = array("type" => "IntervalBox", "name" => "MapWidth", "caption" => "Kartenbreite (px)");
 		$arrayElements[] = array("type" => "IntervalBox", "name" => "MapHeight", "caption" => "Kartenhöhe (px)");
 		
@@ -169,6 +170,10 @@
 						"Function" => "getGoogleMapsInstanceID")));
 		$Result = $this->CheckGoogleMapsModuleID($GoogleMapsInstanceID);
 		If ($Result == true) {
+			$MapWidth = min(640, max(0, $this->ReadPropertyInteger("MapWidth")));
+			$MapHeight = min(640, max(0, $this->ReadPropertyInteger("MapHeight")));
+			
+			$R = min(255, max(0, $R));
 			$points = [
 				['lat' => $Latitude, 'lng' => $Longitude]
 				];
@@ -179,9 +184,9 @@
 			// Mittelpunkt der Karte
 			$map['center'] = $points[0];
 			$map['zoom'] = 18;
-			$MapSize = $this->ReadPropertyInteger("MapWidth")."x".$this->ReadPropertyInteger("MapHeight");
+			$MapSize = $MapWidth."x".$MapHeight;
 			$map['size'] = $MapSize;
-			$map['scale'] = 2;
+			$map['scale'] = 1;
 			$map['maptype'] = $this->ReadPropertyString("MapType");
 
 			$styles = [];
@@ -213,7 +218,7 @@
 			$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
 			//$url = GoogleMaps_GenerateEmbededMap($GoogleMapsInstanceID, json_encode($map));
 			
-			$html = '<img width="'.$this->ReadPropertyInteger("MapWidth").'", height="'.$this->ReadPropertyInteger("MapHeight").'" src="' . $url . '" />';
+			$html = '<img width="'.$MapWidth.'", height="'.$MapHeight.'" src="' . $url . '" />';
 			SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
 		}
 		else {
