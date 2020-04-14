@@ -67,7 +67,8 @@
 		$arrayOptions[] = array("label" => "Hybrid", "value" => "hybrid");
 		$arrayOptions[] = array("label" => "Terrain", "value" => "terrain");
 		$arrayElements[] = array("type" => "Select", "name" => "MapType", "caption" => "Kartentyp", "options" => $arrayOptions );
-
+		$arrayElements[] = array("type" => "IntervalBox", "name" => "MapWidth", "caption" => "Kartenbreite (px)");
+		$arrayElements[] = array("type" => "IntervalBox", "name" => "MapHeight", "caption" => "Kartenhöhe (px)");
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Test Center"); 
@@ -177,9 +178,9 @@
 
 			// Mittelpunkt der Karte
 			$map['center'] = $points[0];
-
 			$map['zoom'] = 18;
-			$map['size'] = '1000x1000';
+			$MapSize = $this->ReadPropertyInteger("MapWidth")."x".$this->ReadPropertyInteger("MapHeight");
+			$map['size'] = $MapSize;
 			$map['scale'] = 2;
 			$map['maptype'] = $this->ReadPropertyString("MapType");
 
@@ -210,8 +211,8 @@
 			$map['markers'] = $markers;
 
 			$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
-
-			$html = '<img width="1000", height="1000" src="' . $url . '" />';
+			
+			$html = '<img width="'.$this->ReadPropertyInteger("MapWidth").'", height="'.$this->ReadPropertyInteger("MapHeight").'" src="' . $url . '" />';
 			SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
 		}
 		else {
