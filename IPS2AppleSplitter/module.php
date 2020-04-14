@@ -67,7 +67,9 @@
 			case "getConfiguratorData":
 				$Result = $this->GetConfiguratorData();
 				break;
-			
+			case "getGoogleMapsInstanceID":
+				$Result = $this->ReadPropertyInteger("GoogleMapsInstanceID");
+				break;
 		}
 	return $Result;
 	}
@@ -123,11 +125,6 @@
 		}
 	return serialize($DeviceArray);
 	}    
-	
-	private function GoogleMaps()
-	{
-	
-	}
 	    
 	private function CheckGoogleMapsModuleID(int $InstanceID)
 	{
