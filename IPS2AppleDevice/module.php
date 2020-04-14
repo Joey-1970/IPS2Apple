@@ -210,8 +210,8 @@
 
 			$map['markers'] = $markers;
 
-			//$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
-			$url = GoogleMaps_GenerateEmbededMap($GoogleMapsInstanceID, json_encode($map));
+			$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
+			//$url = GoogleMaps_GenerateEmbededMap($GoogleMapsInstanceID, json_encode($map));
 			
 			$html = '<img width="'.$this->ReadPropertyInteger("MapWidth").'", height="'.$this->ReadPropertyInteger("MapHeight").'" src="' . $url . '" />';
 			SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
