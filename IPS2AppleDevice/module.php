@@ -152,53 +152,77 @@
 	{
 		$GoogleMapsInstanceID = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
 						"Function" => "getGoogleMapsInstanceID")));
-		
-		$points = [
-    			['lat' => $Latitude, 'lng' => $Longitude]
+		$Result = $this->CheckGoogleMapsModuleID($GoogleMapsInstanceID);
+		If ($Result == true) {
+			$points = [
+				['lat' => $Latitude, 'lng' => $Longitude]
+				];
+
+			// allgemeine Angaben zur Karte
+			$map = [];
+
+			// Mittelpunkt der Karte
+			$map['center'] = $points[0];
+
+			$map['zoom'] = 18;
+			$map['size'] = '1000x1000';
+			$map['scale'] = 2;
+			$map['maptype'] = 'roadmap';
+
+			$styles = [];
+
+			$map['styles'] = $styles;
+
+			$markers = [];
+
+			$marker_points = [];
+			$marker_points[0] = $points[0];
+
+			$markers[] = [
+			    'color'     => 'green',
+			    'label'		   => 'P',
+			    'points'    => $marker_points,
 			];
-		
-		// allgemeine Angaben zur Karte
-		$map = [];
 
-		// Mittelpunkt der Karte
-		$map['center'] = $points[0];
+			$marker_points = [];
 
-		$map['zoom'] = 18;
-		$map['size'] = '1000x1000';
-		$map['scale'] = 2;
-		$map['maptype'] = 'roadmap';
 
-		$styles = [];
+			$markers[] = [
+			    'color'     => '0x0000ff',
+			    'size'      => 'tiny',
+			    'points'    => $marker_points,
+			];
 
-		$map['styles'] = $styles;
+			$map['markers'] = $markers;
 
-		$markers = [];
+			$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
 
-		$marker_points = [];
-		$marker_points[0] = $points[0];
-
-		$markers[] = [
-		    'color'     => 'green',
-		    'label'		   => 'P',
-		    'points'    => $marker_points,
-		];
-
-		$marker_points = [];
-		
-
-		$markers[] = [
-		    'color'     => '0x0000ff',
-		    'size'      => 'tiny',
-		    'points'    => $marker_points,
-		];
-
-		$map['markers'] = $markers;
-		
-		$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
-
-		$html = '<img width="1000", height="1000" src="' . $url . '" />';
-		SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
+			$html = '<img width="1000", height="1000" src="' . $url . '" />';
+			SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
+		}
+		else {
+			SetValueString($this->GetIDForIdent("GoogleMaps"), "Karte konnte nicht erstellt werden (Keine gültige GoogleMaps-Instanz benannt).");
+		}
 	}
+	
+	private function CheckGoogleMapsModuleID(int $InstanceID)
+	{
+		$Result = false;
+		If ($InstanceID >= 10000) {
+			$ModuleID = (IPS_GetInstance($InstanceID)['ModuleInfo']['ModuleID']); 
+			If ($ModuleID == "{2C639155-4F49-4B9C-BBA5-1C7E62F1CF54}") {
+				$Result = true;
+			}
+			else {
+				$this->SendDebug("CheckGoogleMapsModuleID", "Fehlerhafte GoogleMaps-Schnittstelle! (keine korrekte GoogleMaps-Instanz)", 0);
+			}
+		}
+		else {
+			$this->SendDebug("CheckGoogleMapsModuleID", "Fehlerhafte GoogleMaps-Schnittstelle! (keine korrekte GoogleMaps-Instanz)", 0);
+		}
+	return $Result;
+	}    
+	    
 	    
 	private function RegisterProfileBoolean($Name, $Icon)
 	{
