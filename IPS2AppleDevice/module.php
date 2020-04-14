@@ -10,6 +10,7 @@
             	parent::Create();
 		$this->ConnectParent("{715318DA-1FA4-3CB4-2F0C-383322125646}");
 		$this->RegisterPropertyString("DeviceID", "Apple Device ID");
+		$this->RegisterPropertyString("MapType", "roadmap");
 		
 		// Profil anlegen
 		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information");
@@ -54,9 +55,17 @@
 		$arrayStatus[] = array("code" => 102, "icon" => "active", "caption" => "Instanz ist aktiv");
 		$arrayStatus[] = array("code" => 104, "icon" => "inactive", "caption" => "Instanz ist inaktiv");
 		$arrayStatus[] = array("code" => 202, "icon" => "error", "caption" => "Kommunikationfehler!");
-				
 		$arrayElements = array(); 
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "DeviceID", "caption" => "Apple Device ID");
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "label" => "Kartendarstellungsoptionen"); 
+		$arrayOptions = array();
+		$arrayOptions[] = array("label" => "Strassenkarte", "value" => "roadmap");
+		$arrayOptions[] = array("label" => "Satellit", "value" => "satellite");
+		$arrayOptions[] = array("label" => "Hybrid", "value" => "hybrid");
+		$arrayOptions[] = array("label" => "Terrain", "value" => "terrain");
+		$arrayElements[] = array("type" => "Select", "name" => "MapType", "caption" => "Kartentyp", "options" => $arrayOptions );
+
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Test Center"); 
@@ -170,7 +179,7 @@
 			$map['zoom'] = 18;
 			$map['size'] = '1000x1000';
 			$map['scale'] = 2;
-			$map['maptype'] = 'roadmap';
+			$map['maptype'] = $this->ReadPropertyString("MapType");
 
 			$styles = [];
 
