@@ -12,6 +12,7 @@
 		$this->RegisterPropertyString("iCloudUser", "iCloud-Benutzer");
 		$this->RegisterPropertyString("iCloudPassword", "iCloud-Passwort");
 		$this->RegisterPropertyInteger("DataUpdate", 5);
+		$this->RegisterPropertyInteger("GoogleMapsInstanceID", 5);
 		$this->RegisterTimer("DataUpdate", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
         }
  	
@@ -29,7 +30,9 @@
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "iCloudUser", "caption" => "User");
 		$arrayElements[] = array("type" => "PasswordTextBox", "name" => "iCloudPassword", "caption" => "Password");
 		$arrayElements[] = array("type" => "NumberSpinner", "name" => "DataUpdate", "caption" => "Daten-Update (min)");
-		
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "label" => "GoogleMaps Instanz ID (GoogleMaps-Modul ist im Modul-Store erhältlich)"); 
+		$arrayElements[] = array("type" => "SelectInstance", "name" => "VoIP_InstanceID", "caption" => "GoogleMaps-Instanz");
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
 	   
@@ -40,6 +43,8 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
+			$GoogleMapsInstanceID = $this->ReadPropertyInteger("GoogleMapsInstanceID");
+			$this->CheckGoogleMapsModuleID($GoogleMapsInstanceID);
 			$this->SetStatus(102);
 			$this->GetData();
 			$this->SetTimerInterval("DataUpdate", $this->ReadPropertyInteger("DataUpdate") * 60 * 1000);
@@ -118,6 +123,30 @@
 		}
 	return serialize($DeviceArray);
 	}    
+	
+	private function GoogleMaps()
+	{
+	
+	}
+	    
+	private function CheckGoogleMapsModuleID(int $InstanceID)
+	{
+		$Result = false;
+		If ($InstanceID >= 10000) {
+			$ModuleID = (IPS_GetInstance($InstanceID)['ModuleInfo']['ModuleID']); 
+			If ($ModuleID == "{2C639155-4F49-4B9C-BBA5-1C7E62F1CF54}") {
+				$Result = true;
+			}
+			else {
+				Echo "Fehlerhafte GoogleMaps-Schnittstelle! \n(keine korrekte GoogleMaps-Instanz)\n";
+			}
+		}
+		else {
+			//Echo "Fehlende GoogleMaps-Schnittstelle! \n";
+		}
+	return $Result;
+	}
+	    
 	    
 	/*
 	private function FileTest()
