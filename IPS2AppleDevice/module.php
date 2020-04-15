@@ -216,20 +216,10 @@
 			    'label'	=> strtoupper(substr($DeviceName, 0, 1)),
 			    'points'    => $marker_points,
 			];
-			/*
-			$marker_points = [];
-
-
-			$markers[] = [
-			    'color'     => '0x0000ff',
-			    'size'      => 'tiny',
-			    'points'    => $marker_points,
-			];
-			*/
 			$map['markers'] = $markers;
 
-			$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
-			//$url = GoogleMaps_GenerateEmbededMap($GoogleMapsInstanceID, json_encode($map));
+			//$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
+			$url = GoogleMaps_GenerateEmbededMap($GoogleMapsInstanceID, json_encode($map));
 			
 			$html = '<img width="'.($MapWidth * $MapScale).'", height="'.($MapHeight * $MapScale).'" src="' . $url . '" />';
 			SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
