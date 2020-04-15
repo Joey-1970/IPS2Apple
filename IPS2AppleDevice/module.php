@@ -218,8 +218,8 @@
 			];
 			$map['markers'] = $markers;
 
-			//$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
-			$url = GoogleMaps_GenerateEmbededMap($GoogleMapsInstanceID, json_encode($map));
+			$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
+			//$url = GoogleMaps_GenerateEmbededMap($GoogleMapsInstanceID, json_encode($map));
 			
 			$html = '<img width="'.($MapWidth * $MapScale).'", height="'.($MapHeight * $MapScale).'" src="' . $url . '" />';
 			SetValueString($this->GetIDForIdent("GoogleMaps"), $html);
