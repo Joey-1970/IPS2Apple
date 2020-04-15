@@ -14,6 +14,7 @@
 		$this->RegisterPropertyInteger("MapWidth", 640);
 		$this->RegisterPropertyInteger("MapHeight", 640);
 		$this->RegisterPropertyInteger("MapScale", 1);
+		$this->RegisterPropertyInteger("MapZoom", 18);
 		
 		// Profil anlegen
 		$this->RegisterProfileBoolean("JaNein.IPS2Apple", "Information");
@@ -75,6 +76,12 @@
 		$arrayOptions[] = array("label" => "1-fach", "value" => 1);
 		$arrayOptions[] = array("label" => "2-fach", "value" => 2);
 		$arrayElements[] = array("type" => "Select", "name" => "MapScale", "caption" => "Kartenskalierung", "options" => $arrayOptions );
+		$arrayOptions = array();
+		for ($i = 1; $i <= 20; $i++) {
+			$arrayOptions[] = array("label" => $i, "value" => $i);
+		}
+		$arrayElements[] = array("type" => "Label", "label" => "1 (Welt) - 20 (Gebäude)"); 
+		$arrayElements[] = array("type" => "Select", "name" => "MapZoom", "caption" => "Zoom", "options" => $arrayOptions );
 
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Test Center"); 
@@ -179,6 +186,7 @@
 			$MapHeight = min(640, max(0, $this->ReadPropertyInteger("MapHeight")));
 			$MapScale = min(2, max(1, $this->ReadPropertyInteger("MapScale")));
 			$MapType = $this->ReadPropertyString("MapType");
+			$MapZoom = min(20, max(1, $this->ReadPropertyInteger("MapZoom")));
 			
 			$points = [
 				['lat' => $Latitude, 'lng' => $Longitude]
@@ -189,14 +197,13 @@
 
 			// Mittelpunkt der Karte
 			$map['center'] = $points[0];
-			$map['zoom'] = 18;
+			$map['zoom'] = $MapZoom;
 			$MapSize = $MapWidth."x".$MapHeight;
 			$map['size'] = $MapSize;
 			$map['scale'] = $MapScale;
 			$map['maptype'] = $MapType;
 
 			$styles = [];
-
 			$map['styles'] = $styles;
 
 			$markers = [];
@@ -209,7 +216,7 @@
 			    'label'	=> strtoupper(substr($DeviceName, 0, 1)),
 			    'points'    => $marker_points,
 			];
-
+			/*
 			$marker_points = [];
 
 
@@ -218,7 +225,7 @@
 			    'size'      => 'tiny',
 			    'points'    => $marker_points,
 			];
-
+			*/
 			$map['markers'] = $markers;
 
 			$url = GoogleMaps_GenerateStaticMap($GoogleMapsInstanceID, json_encode($map));
