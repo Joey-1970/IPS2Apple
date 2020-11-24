@@ -246,8 +246,37 @@
 		}
 	return $Result;
 	}    
-	    
-	    
+	  
+	// Berechnet aus zwei GPS-Koordinaten die Entfernung
+	private function GPS_Distanz(float $Latitude, float $Longitude, float $Altitude)
+	{
+		$locationObject = unserialize($this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
+					 "Function" => "getLocation"))));
+		$HomeLatitude = $locationObject['latitude'];
+		$HomeLongitude = $locationObject['longitude']; 
+		$HomeHeightOverNN = 0; //$this->ReadPropertyInteger("HeightOverNN") / 1000; // Umrechnung in km
+		$Altitude = $Altitude / 3.281 / 1000; // Umrechnung von ft in km
+		
+		$km = 0;
+		$pi80 = M_PI / 180;
+		$Latitude *= $pi80;
+		$Longitude *= $pi80;
+		$HomeLatitude *= $pi80;
+		$HomeLongitude *= $pi80;
+
+		$r = 6372.797; // mean radius of Earth in km
+		$dlat = $HomeLatitude - $Latitude;
+		$dlng = $HomeLongitude - $Longitude;
+		$a = sin($dlat / 2) * sin($dlat / 2) + cos($Latitude) * cos($HomeLatitude) * sin($dlng / 2) * sin($dlng / 2);
+		$c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+		$Distence2d = $r * $c;
+		
+		// Um Höhe korrigieren
+		$dheight = $Altitude - $HomeHeightOverNN;
+		$km = sqrt(pow($Distence2d, 2) + pow($dheight, 2));
+		$km = round($km, 1);
+	return $km;
+	}	    
 	private function RegisterProfileBoolean($Name, $Icon)
 	{
 	        if (!IPS_VariableProfileExists($Name))
