@@ -13,6 +13,7 @@
 		$this->RegisterPropertyString("iCloudPassword", "iCloud-Passwort");
 		$this->RegisterPropertyInteger("DataUpdate", 5);
 		$this->RegisterPropertyInteger("GoogleMapsInstanceID", 5);
+		$this->RegisterPropertyString("Location", '{"latitude":0,"longitude":0}');
 		$this->RegisterTimer("DataUpdate", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
         }
  	
@@ -30,10 +31,12 @@
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "iCloudUser", "caption" => "User");
 		$arrayElements[] = array("type" => "PasswordTextBox", "name" => "iCloudPassword", "caption" => "Password");
 		$arrayElements[] = array("type" => "NumberSpinner", "name" => "DataUpdate", "caption" => "Daten-Update (min)");
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "GoogleMaps Instanz ID (GoogleMaps-Modul ist im Modul-Store erhältlich)"); 
 		$arrayElements[] = array("type" => "SelectInstance", "name" => "GoogleMapsInstanceID", "caption" => "GoogleMaps-Instanz");
- 		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "SelectLocation", "name" => "Location", "caption" => "Region");
+		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
 	   
         // Überschreibt die intere IPS_ApplyChanges($id) Funktion
