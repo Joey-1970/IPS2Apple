@@ -9,8 +9,8 @@
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->ConnectParent("{715318DA-1FA4-3CB4-2F0C-383322125646}");
-		
-        }
+		$this->RegisterPropertyInteger("Category", 0); 
+	}
  	
 	public function GetConfigurationForm() 
 	{ 
@@ -21,13 +21,25 @@
 		$arrayStatus[] = array("code" => 202, "icon" => "error", "caption" => "Kommunikationfehler!");
 				
 		$arrayElements = array(); 
-		
+		$arrayElements[] = array("type" => "SelectCategory", "name" => "Category", "caption" => "Zielkategorie");
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
 		$arraySort = array();
 		$arraySort = array("column" => "Device", "direction" => "ascending");
 		
 		$arrayColumns = array();
 		$arrayColumns[] = array("caption" => "Modell", "name" => "Device", "width" => "100px", "visible" => true);
 		$arrayColumns[] = array("caption" => "Name", "name" => "Name", "width" => "auto", "visible" => true);
+		
+		$Category = $this->ReadPropertyInteger("Category");
+		$RootNames = [];
+		$RootId = $Category;
+		while ($RootId != 0) {
+		    	if ($RootId != 0) {
+				$RootNames[] = IPS_GetName($RootId);
+		    	}
+		    	$RootId = IPS_GetParent($RootId);
+			}
+		$RootNames = array_reverse($RootNames);
 		
 		$DeviceArray = array();
 		If ($this->HasActiveParent() == true) {
@@ -36,7 +48,7 @@
 		$arrayValues = array();
 		for ($i = 0; $i < Count($DeviceArray); $i++) {
 			$arrayCreate = array();
-			$arrayCreate[] = array("moduleID" => "{4C40D461-8047-04BC-3566-52E76067225A}", 
+			$arrayCreate[] = array("moduleID" => "{4C40D461-8047-04BC-3566-52E76067225A}", "location" => $RootNames, 
 					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"]));
 			$arrayValues[] = array("Device" => $DeviceArray[$i]["DeviceModel"], "Name" => $DeviceArray[$i]["DeviceName"], 
 					       "instanceID" => $DeviceArray[$i]["InstanceID"], 
