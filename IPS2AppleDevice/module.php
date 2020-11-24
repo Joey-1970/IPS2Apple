@@ -168,6 +168,7 @@
 			SetValueFloat($this->GetIDForIdent("verticalAccuracy"), $DeviceDataArray->location->verticalAccuracy);
 			SetValueFloat($this->GetIDForIdent("Longitude"), $DeviceDataArray->location->longitude);
 			$this->GoogleMaps($DeviceDataArray->location->latitude, $DeviceDataArray->location->longitude, $DeviceDataArray->name);
+			$this->GoogleMaps($DeviceDataArray->location->latitude, $DeviceDataArray->location->longitude, $DeviceDataArray->altitude);
         	} 
 		else {
 			SetValueString($this->GetIDForIdent("GoogleMaps"), "Karte konnte nicht erstellt werden (Keine aktuellen Daten).");
@@ -254,6 +255,9 @@
 					 "Function" => "getLocation"))));
 		$HomeLatitude = $locationObject['latitude'];
 		$HomeLongitude = $locationObject['longitude']; 
+		$this->SendDebug("GPS_Distanz", $HomeLatitude." - ".$HomeLongitude." - ".$Latitude." - ".$Longitude 0);
+		return;
+		
 		$HomeHeightOverNN = 0; //$this->ReadPropertyInteger("HeightOverNN") / 1000; // Umrechnung in km
 		$Altitude = $Altitude / 3.281 / 1000; // Umrechnung von ft in km
 		
