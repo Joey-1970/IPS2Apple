@@ -255,7 +255,7 @@
 					 "Function" => "getLocation"))));
 		$HomeLatitude = $locationObject['latitude'];
 		$HomeLongitude = $locationObject['longitude']; 
-		$this->SendDebug("GPS_Distanz", $HomeLatitude." - ".$HomeLongitude." - ".$Latitude." - ".$Longitude 0);
+		$this->SendDebug("GPS_Distanz", $HomeLatitude." - ".$HomeLongitude." - ".$Latitude." - ".$Longitude, 0);
 		return;
 		
 		$HomeHeightOverNN = 0; //$this->ReadPropertyInteger("HeightOverNN") / 1000; // Umrechnung in km
