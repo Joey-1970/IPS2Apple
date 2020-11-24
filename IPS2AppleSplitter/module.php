@@ -73,6 +73,10 @@
 			case "getGoogleMapsInstanceID":
 				$Result = $this->ReadPropertyInteger("GoogleMapsInstanceID");
 				break;
+			case "getLocation":
+				$locationObject = json_decode($this->ReadPropertyString('Location'), true);		
+				$Result = serialize($locationObject);				
+				break;
 		}
 	return $Result;
 	}
