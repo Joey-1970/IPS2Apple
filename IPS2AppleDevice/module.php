@@ -23,6 +23,8 @@
 		
 		$this->RegisterProfileFloat("Meter.IPS2Apple", "Distance", "", " m", 0, 1000, 0.1, 1);
 		
+		$this->RegisterProfileFloat("KiloMeter.IPS2Apple", "Distance", "", " km", 0, 1000, 0.1, 1);
+		
 		$this->RegisterProfileFloat("Percent.IPS2Apple", "Graph", "", " %", 0, 100, 0.1, 1);
 	
 		// Statusvariablen anlegen
@@ -49,7 +51,7 @@
 		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 100);
 		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
 		$this->RegisterVariableString("GoogleMaps", "GoogleMaps", "~HTMLBox", $LocationPostion + 120);
-        
+		$this->RegisterVariableFloat("Distance", "Distanz", "KiloMeter.IPS2Apple", $LocationPostion + 130);        
         }
  	
 	public function GetConfigurationForm() 
