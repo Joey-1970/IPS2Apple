@@ -258,10 +258,9 @@
 		$HomeLatitude = $locationObject['latitude'];
 		$HomeLongitude = $locationObject['longitude']; 
 		$this->SendDebug("GPS_Distanz", $HomeLatitude." - ".$HomeLongitude." - ".$Latitude." - ".$Longitude, 0);
-		return;
 		
 		$HomeHeightOverNN = 0; //$this->ReadPropertyInteger("HeightOverNN") / 1000; // Umrechnung in km
-		$Altitude = $Altitude / 3.281 / 1000; // Umrechnung von ft in km
+		$Altitude = $Altitude / 1000; // Umrechnung von ft in km
 		
 		$km = 0;
 		$pi80 = M_PI / 180;
@@ -281,8 +280,9 @@
 		$dheight = $Altitude - $HomeHeightOverNN;
 		$km = sqrt(pow($Distence2d, 2) + pow($dheight, 2));
 		$km = round($km, 1);
-	return $km;
-	}	    
+		$this->SetValue("Distance", $km);
+	}
+	    
 	private function RegisterProfileBoolean($Name, $Icon)
 	{
 	        if (!IPS_VariableProfileExists($Name))
