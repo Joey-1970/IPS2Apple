@@ -146,7 +146,7 @@
 	{
 		$DeviceDataArray = unserialize($DeviceData);
 		$this->SetStatus(102);
-		SetValueInteger($this->GetIDForIdent("LastUpdate"), time());
+		$this->SetValue("LastUpdate", time());
 		SetValueString($this->GetIDForIdent("modelDisplayName"), $DeviceDataArray->modelDisplayName);
 		SetValueString($this->GetIDForIdent("batteryStatus"), $DeviceDataArray->batteryStatus);
 		If ($DeviceDataArray->batteryStatus <> "Unknown") {
