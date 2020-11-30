@@ -51,8 +51,11 @@
 		$this->RegisterVariableFloat("verticalAccuracy", "Vertikale Genauigkeit", "Meter.IPS2Apple", $LocationPostion + 100);
 		$this->RegisterVariableFloat("Longitude", "Longitude", "", $LocationPostion + 110);
 		$this->RegisterVariableString("GoogleMaps", "GoogleMaps", "~HTMLBox", $LocationPostion + 120);
-		$this->RegisterVariableFloat("Distance", "Distanz", "KiloMeter.IPS2Apple", $LocationPostion + 130);        
-        }
+		$this->RegisterVariableFloat("Distance", "Distanz", "KiloMeter.IPS2Apple", $LocationPostion + 130); 
+		
+		$this->RegisterVariableBoolean("PlaySound", "Play Sound", "~Switch", $LocationPostion + 140); 
+		$this->EnableAction("PlaySound");
+	}
  	
 	public function GetConfigurationForm() 
 	{ 
@@ -139,6 +142,20 @@
 			   	}
 			    break;
 		}
+	}    
+	
+	public function RequestAction($Ident, $Value) 
+	{
+  		switch($Ident) {
+	        	case "PlaySound":
+	            		If ($this->ReadPropertyBoolean("Open") == true) {
+		    			$GoogleMapsInstanceID = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
+						"DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => "Test")));
+		    		}
+	            	break;
+	        default:
+	            	throw new Exception("Invalid Ident");
+	    	}
 	}    
 	    
 	// Beginn der Funktionen
