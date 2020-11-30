@@ -77,6 +77,9 @@
 				$locationObject = json_decode($this->ReadPropertyString('Location'), true);		
 				$Result = serialize($locationObject);				
 				break;
+			case "PlaySound":
+				$Result = $this->PlaySound($data->DeviceID, $data->Message);
+				break;
 		}
 	return $Result;
 	}
@@ -164,7 +167,7 @@
 
 			//echo 'Sound abspielen... '."\n";
 			$Result = $FindMyiPhone->play_sound($DeviceID, $Message);
-			//echo PHP_EOL;
+			$this->SendDebug("PlaySound", $Result, 0);
 		}
 	}
 	    
