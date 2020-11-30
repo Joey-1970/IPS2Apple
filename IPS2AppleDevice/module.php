@@ -149,7 +149,7 @@
   		switch($Ident) {
 	        	case "PlaySound":
 		    		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
-						"Function" => "PlaySound", "DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => "Test")));
+						"Function" => "PlaySound", "DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => "IP-Symcon")));
 	            	break;
 	        default:
 	            	throw new Exception("Invalid Ident");
