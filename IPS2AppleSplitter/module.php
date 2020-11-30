@@ -78,6 +78,9 @@
 				$Result = serialize($locationObject);				
 				break;
 			case "PlaySound":
+				$Result = $this->PlaySound($data->DeviceID);
+				break;
+			case "SendMessage":
 				$Result = $this->PlaySound($data->DeviceID, $data->Message);
 				break;
 		}
@@ -154,7 +157,26 @@
 	return $Result;
 	}
 	
-	private function PlaySound($DeviceID, $Message)
+	private function PlaySound($DeviceID)
+	{
+		$Result = false;
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			set_include_path(__DIR__.'/../libs');
+			require_once (__DIR__ .'/../libs/FindMyiPhone.php');
+
+			$iCloudUser = $this->ReadPropertyString("iCloudUser");;
+			$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
+
+			$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
+			
+			If ($FindMyiPhone->play_sound($DeviceID, "IP-Symcon")->statusCode == 200) {
+				$Result = true;
+			}
+		}
+	return $Result;
+	}
+	    
+	private function SendMessage($DeviceID, $Message)
 	{
 		$Result = false;
 		If ($this->ReadPropertyBoolean("Open") == true) {
@@ -166,7 +188,7 @@
 
 			$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
 
-			If ($FindMyiPhone->play_sound($DeviceID, $Message)->statusCode == 200) {
+			If ($FindMyiPhone->send_message($DeviceID, $Message, false, 'IP-Symcon') {
 				$Result = true;
 			}
 		}
@@ -190,19 +212,7 @@
 		}
 	return $Result;
 	}
-	
-	private function SendMessage()
-	{
-		set_include_path(__DIR__.'/../libs');
-		require_once (__DIR__ .'/../libs/FindMyiPhone.php');
-		
-		$FindMyiPhone = new FindMyiPhone('BENUTZERNAME', 'PASSWORT');  // iCloud Benutzer/Passwort eingeben
-		//$device_id = $FindMyiPhone->devices[1]->id;
-		$text = 'Ich bin eine Nachricht.';
-		echo 'Sende Nachricht... '."\n";
-		echo ($FindMyiPhone->send_message($device_id, $text, false, 'IP-Symcon')->statusCode == 200) ? '...gesendet!' : '...Fehler!';
-		echo PHP_EOL;
-	}
+
 	*/
 }
 ?>
