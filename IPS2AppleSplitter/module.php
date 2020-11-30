@@ -150,7 +150,23 @@
 		}
 	return $Result;
 	}
-	    
+	
+	private function PlaySound($DeviceID, $Message)
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			set_include_path(__DIR__.'/../libs');
+			require_once (__DIR__ .'/../libs/FindMyiPhone.php');
+
+			$iCloudUser = $this->ReadPropertyString("iCloudUser");;
+			$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
+
+			$FindMyiPhone = new FindMyiPhone('$iCloudUser', '$iCloudPassword');  // iCloud Benutzer/Passwort eingeben
+
+			//echo 'Sound abspielen... '."\n";
+			$Result = $FindMyiPhone->play_sound($DeviceID, $Message);
+			//echo PHP_EOL;
+		}
+	}
 	    
 	/*
 	private function FileTest()
