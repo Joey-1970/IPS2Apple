@@ -53,8 +53,14 @@
 		$this->RegisterVariableString("GoogleMaps", "GoogleMaps", "~HTMLBox", $LocationPostion + 120);
 		$this->RegisterVariableFloat("Distance", "Distanz", "KiloMeter.IPS2Apple", $LocationPostion + 130); 
 		
-		$this->RegisterVariableBoolean("PlaySound", "Play Sound", "~Switch", $LocationPostion + 140); 
+		$this->RegisterVariableBoolean("PlaySound", "Spiele Suchton", "~Switch", $LocationPostion + 140); 
 		$this->EnableAction("PlaySound");
+		
+		$this->RegisterVariableString("Message", "Nachricht", "~TextBox", $LocationPostion + 150); 
+		$this->EnableAction("Message");
+		
+		$this->RegisterVariableBoolean("SendMessage", "Sende Nachricht", "~Switch", $LocationPostion + 160); 
+		$this->EnableAction("SendMessage");
 	}
  	
 	public function GetConfigurationForm() 
@@ -148,9 +154,17 @@
 	{
   		switch($Ident) {
 	        	case "PlaySound":
+				$this->SetValue("PlaySound", true);
 		    		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
-						"Function" => "PlaySound", "DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => "IP-Symcon")));
-	            	break;
+						"Function" => "PlaySound", "DeviceID" => $this->ReadPropertyString("DeviceID") )));
+				$this->SetValue("PlaySound", false);
+	            		break;
+			case "SendMessage":
+				$this->SetValue("SendMessage", true);
+		    		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
+						"Function" => "SendMessage", "DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => $this->ReadPropertyString("Message") )));
+				$this->SetValue("SendMessage", false);
+	            		break;
 	        default:
 	            	throw new Exception("Invalid Ident");
 	    	}
