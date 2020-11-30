@@ -156,6 +156,7 @@
 	
 	private function PlaySound($DeviceID, $Message)
 	{
+		$Result = false;
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			set_include_path(__DIR__.'/../libs');
 			require_once (__DIR__ .'/../libs/FindMyiPhone.php');
@@ -165,10 +166,11 @@
 
 			$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
 
-			//echo 'Sound abspielen... '."\n";
-			$Result = $FindMyiPhone->play_sound($DeviceID, $Message);
-			$this->SendDebug("PlaySound", $Result, 0);
+			If ($FindMyiPhone->play_sound($DeviceID, $Message)->statusCode == 200) {
+				$Result = true;
+			}
 		}
+	return $Result;
 	}
 	    
 	/*
