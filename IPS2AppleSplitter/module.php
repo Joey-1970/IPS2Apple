@@ -163,7 +163,7 @@
 			$iCloudUser = $this->ReadPropertyString("iCloudUser");;
 			$iCloudPassword = $this->ReadPropertyString("iCloudPassword");
 
-			$FindMyiPhone = new FindMyiPhone('$iCloudUser', '$iCloudPassword');  // iCloud Benutzer/Passwort eingeben
+			$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
 
 			//echo 'Sound abspielen... '."\n";
 			$Result = $FindMyiPhone->play_sound($DeviceID, $Message);
