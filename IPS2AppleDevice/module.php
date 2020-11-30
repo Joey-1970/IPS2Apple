@@ -162,7 +162,7 @@
 			case "SendMessage":
 				$this->SetValue("SendMessage", true);
 		    		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
-						"Function" => "SendMessage", "DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => $this->ReadPropertyString("Message") )));
+						"Function" => "SendMessage", "DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => $this->GetValue("Message") )));
 				$this->SetValue("SendMessage", false);
 	            		break;
 	        default:
