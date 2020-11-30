@@ -165,6 +165,9 @@
 						"Function" => "SendMessage", "DeviceID" => $this->ReadPropertyString("DeviceID"), "Message" => $this->GetValue("Message") )));
 				$this->SetValue("SendMessage", false);
 	            		break;
+			case "Message":
+				// Keine Aktion notwendig
+	            		break;
 	        default:
 	            	throw new Exception("Invalid Ident");
 	    	}
