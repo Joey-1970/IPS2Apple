@@ -188,7 +188,7 @@
 
 			$FindMyiPhone = new FindMyiPhone($iCloudUser, $iCloudPassword); 
 
-			If ($FindMyiPhone->send_message($DeviceID, $Message, false, 'IP-Symcon') {
+			If ($FindMyiPhone->send_message($DeviceID, $Message, false, 'IP-Symcon')->statusCode == 200) {
 				$Result = true;
 			}
 		}
