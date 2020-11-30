@@ -12,7 +12,7 @@
 		$this->RegisterPropertyString("iCloudUser", "iCloud-Benutzer");
 		$this->RegisterPropertyString("iCloudPassword", "iCloud-Passwort");
 		$this->RegisterPropertyInteger("DataUpdate", 5);
-		$this->RegisterPropertyInteger("GoogleMapsInstanceID", 5);
+		$this->RegisterPropertyInteger("GoogleMapsInstanceID", 0);
 		$this->RegisterPropertyString("Location", '{"latitude":0,"longitude":0}');
 		$this->RegisterTimer("DataUpdate", 0, 'IPS2AppleSplitter_GetData($_IPS["TARGET"]);');
         }
