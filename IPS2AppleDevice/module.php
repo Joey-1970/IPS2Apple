@@ -111,9 +111,14 @@
 		$this->RegisterMessage($this->InstanceID, 10103);
 		
 		//ReceiveData-Filter setzen
-		$DeviceID = $this->ReadPropertyString("DeviceID");
-		$Filter = '(.*"DeviceID":'.$DeviceID.'.*)';
-		//$this->SetReceiveDataFilter($Filter);
+		
+		//$Filter = '(.*"Function":"get_used_i2c".*)';
+		//.*"DeviceID":'.$this->ReadPropertyString("DeviceID").'.*
+		//$DeviceID = $this->ReadPropertyString("DeviceID");
+		//$this->SetReceiveDataFilter(".*Hallo.*");
+		
+		$Filter = '.*"DeviceID":'.$this->ReadPropertyString("DeviceID").'.*';
+		$this->SetReceiveDataFilter($Filter);
 		
 		If ($this->HasActiveParent() == true) {
 			$this->SetStatus(102);	
