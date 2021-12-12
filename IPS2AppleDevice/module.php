@@ -112,7 +112,6 @@
 		
 		//ReceiveData-Filter setzen
 		$TopicFilter = '.*"DeviceID":"' . preg_quote(substr(json_encode($this->ReadPropertyString("DeviceID")), 1, -1)) . '.*';
-		//$Filter = '(.*"DeviceID":"'.$this->ReadPropertyString("DeviceID").'".*)';
 		$this->SetReceiveDataFilter($TopicFilter);
 		
 		If ($this->HasActiveParent() == true) {
