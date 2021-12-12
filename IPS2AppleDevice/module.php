@@ -118,7 +118,7 @@
 		//$this->SetReceiveDataFilter(".*Hallo.*");
 		
 		$Filter = '.*"DeviceID":'.$this->ReadPropertyString("DeviceID").'.*';
-		$this->SetReceiveDataFilter($Filter);
+		//$this->SetReceiveDataFilter($Filter);
 		
 		If ($this->HasActiveParent() == true) {
 			$this->SetStatus(102);	
