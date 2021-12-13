@@ -8,6 +8,7 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
+		$this->RegisterMessage(0, IPS_KERNELSTARTED);
 		$this->ConnectParent("{715318DA-1FA4-3CB4-2F0C-383322125646}");
 		$this->RegisterPropertyString("DeviceID", "Apple Device ID");
 		$this->RegisterPropertyString("MapType", "roadmap");
@@ -108,13 +109,11 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
-		$this->RegisterMessage($this->InstanceID, 10103);
-		
 		//ReceiveData-Filter setzen
 		$TopicFilter = '.*"DeviceID":"' . preg_quote(substr(json_encode($this->ReadPropertyString("DeviceID")), 1, -1)) . '.*';
 		$this->SetReceiveDataFilter($TopicFilter);
 		
-		If ($this->HasActiveParent() == true) {
+		If ((IPS_GetKernelRunlevel() == KR_READY) AND ($this->HasActiveParent() == true)) {
 			$this->SetStatus(102);	
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
 					 "Function" => "getData")));
@@ -128,8 +127,10 @@
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     	{
  		switch ($Message) {
-			case 10103:
-				$this->ApplyChanges();
+			case IPS_KERNELSTARTED::
+				$this->SetStatus(102);	
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
+					 "Function" => "getData")));
 				break;
 			
 		}
