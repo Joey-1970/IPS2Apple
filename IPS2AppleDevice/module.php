@@ -114,12 +114,16 @@
 		$this->SetReceiveDataFilter($TopicFilter);
 		
 		If ((IPS_GetKernelRunlevel() == KR_READY) AND ($this->HasActiveParent() == true)) {
-			$this->SetStatus(102);	
+			If ($this->GetStatus() <> 102) {
+				$this->SetStatus(102);
+			}
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
 					 "Function" => "getData")));
 		}
 		else {
-			$this->SetStatus(104);
+			If ($this->GetStatus() <> 104) {
+				$this->SetStatus(104);
+			}
 		}
 		
 	}
@@ -128,7 +132,9 @@
     	{
  		switch ($Message) {
 			case IPS_KERNELSTARTED::
-				$this->SetStatus(102);	
+				If ($this->GetStatus() <> 102) {
+					$this->SetStatus(102);
+				}
 				$this->SendDataToParent(json_encode(Array("DataID"=> "{485663CC-3911-FAC7-9FCC-6E4D06438527}", 
 					 "Function" => "getData")));
 				break;
@@ -177,7 +183,9 @@
 	private function ShowData(string $DeviceData)
 	{
 		$DeviceDataArray = unserialize($DeviceData);
-		$this->SetStatus(102);
+		If ($this->GetStatus() <> 102) {
+			$this->SetStatus(102);
+		}
 		$this->SetValue("LastUpdate", time());
 		SetValueString($this->GetIDForIdent("modelDisplayName"), $DeviceDataArray->modelDisplayName);
 		SetValueString($this->GetIDForIdent("batteryStatus"), $DeviceDataArray->batteryStatus);
