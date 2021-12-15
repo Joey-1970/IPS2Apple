@@ -48,12 +48,16 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$GoogleMapsInstanceID = $this->ReadPropertyInteger("GoogleMapsInstanceID");
 			$this->CheckGoogleMapsModuleID($GoogleMapsInstanceID);
-			$this->SetStatus(102);
+			If ($this->GetStatus() <> 102) {
+				$this->SetStatus(102);
+			}
 			$this->GetData();
 			$this->SetTimerInterval("DataUpdate", $this->ReadPropertyInteger("DataUpdate") * 60 * 1000);
 		}
 		else {
-			$this->SetStatus(104);
+			If ($this->GetStatus() <> 104) {
+				$this->SetStatus(104);
+			}
 			$this->SetTimerInterval("DataUpdate", 0);
 		}	
 	}
