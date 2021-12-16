@@ -131,7 +131,7 @@
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     	{
  		switch ($Message) {
-			case IPS_KERNELSTARTED::
+			case IPS_KERNELSTARTED:
 				If ($this->GetStatus() <> 102) {
 					$this->SetStatus(102);
 				}
