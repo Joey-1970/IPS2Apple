@@ -17,15 +17,15 @@ class FindMyiPhone {
     private $scope;
 
     private $client_context = array(
-        'appName' => 'FindMyiPhone',
-        'appVersion' => '5.0',
-        'buildVersion' => '376',
-        'clientTimestamp' => 0,
-        'deviceUDID' => null,
-        'inactiveTime' => 1,
-        'osVersion' => '7.0.3',
-        'productType' => 'iPhone6,1'
-    );
+	'appName' => 'FindMyiPhone',
+	'appVersion' => '5.0',
+	'buildVersion' => '376',
+	'clientTimestamp' => 0,
+	'deviceUDID' => null,
+	'inactiveTime' => 1,
+	'osVersion' => '15.0',
+	'productType' => 'iPhone12,8'
+	);
 
     private $server_context = array(
         'callbackIntervalInMS' => 10000,
@@ -372,5 +372,7 @@ class FindMyiPhone {
 }
 
 class FindMyiPhoneException extends Exception {}
+
+?>
 
 ?>
