@@ -374,5 +374,3 @@ class FindMyiPhone {
 class FindMyiPhoneException extends Exception {}
 
 ?>
-
-?>
